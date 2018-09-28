@@ -1,11 +1,18 @@
 package com.everis.fallas.operacionales.workitem.bean;
 
 public class Auditoria {
+	private String idTransaccion;
 	private String repository;
 	private String username;
 	private String password;
 	private String area;
 	
+	public String getIdTransaccion() {
+		return idTransaccion;
+	}
+	public void setIdTransaccion(String idTransaccion) {
+		this.idTransaccion = idTransaccion;
+	}
 	public String getRepository() {
 		return repository;
 	}

@@ -24,7 +24,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.everis.fallas.operacionales.workitem.IWorkItemCommandLineConstants;
+import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
 import com.everis.fallas.operacionales.workitem.framework.ParameterValue;
 import com.everis.fallas.operacionales.workitem.framework.ReferenceData;
 import com.everis.fallas.operacionales.workitem.framework.WorkItemCommandLineException;
@@ -102,7 +102,6 @@ import com.ibm.team.workitem.common.workflow.IWorkflowInfo;
  * Class helps with manipulating work item attribute values.
  * 
  */
-@SuppressWarnings("restriction")
 public class WorkItemUpdateHelper {
 
 	private static final int XML_GROWTH_CONSTANT = 50;

@@ -7,8 +7,8 @@
  *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.commands;
 
-import com.everis.fallas.operacionales.workitem.IWorkItemCommandLineConstants;
-import com.everis.fallas.operacionales.workitem.OperationResult;
+import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
+import com.everis.fallas.operacionales.workitem.common.OperationResult;
 import com.everis.fallas.operacionales.workitem.framework.AbstractWorkItemModificationCommand;
 import com.everis.fallas.operacionales.workitem.framework.WorkItemCommandLineException;
 import com.everis.fallas.operacionales.workitem.helper.WorkItemTypeHelper;

@@ -13,8 +13,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.everis.fallas.operacionales.workitem.IWorkItemCommandLineConstants;
-import com.everis.fallas.operacionales.workitem.OperationResult;
+import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
+import com.everis.fallas.operacionales.workitem.common.OperationResult;
 import com.everis.fallas.operacionales.workitem.framework.AbstractTeamRepositoryCommand;
 import com.everis.fallas.operacionales.workitem.framework.WorkItemCommandLineException;
 import com.everis.fallas.operacionales.workitem.helper.WorkItemTypeHelper;

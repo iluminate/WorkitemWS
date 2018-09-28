@@ -4,6 +4,11 @@ public class Parametro {
 	private String name;
 	private String value;
 	
+	public Parametro() {}
+	public Parametro(String name, String value) {
+		this.setName(name);
+		this.setValue(value);
+	}
 	public String getName() {
 		return name;
 	}

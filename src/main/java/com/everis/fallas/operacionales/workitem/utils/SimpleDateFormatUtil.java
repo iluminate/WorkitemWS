@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.utils;
 
 import java.sql.Timestamp;
@@ -15,10 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.everis.fallas.operacionales.workitem.framework.WorkItemCommandLineException;
 
-/**
- * Class to handle conversion of dates into timestamps
- * 
- */
 public class SimpleDateFormatUtil {
 
 	public static final String DURATION_HOURS = "hours";
@@ -26,37 +15,10 @@ public class SimpleDateFormatUtil {
 	public static final String SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD_HH_MM_SS_Z = "yyyy/MM/dd hh:mm:ss z";
 	public static final String SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD = "yyyy/MM/dd";
 
-	/**
-	 * 
-	 * Uses java.text.SimpleDateFormat to parse the string using a pattern
-	 * Create a new timeStamp from a String using a pattern 'yyyy/MM/dd hh:mm:ss
-	 * z'
-	 * 
-	 * @see http 
-	 *      ://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
-	 * 
-	 * @param aDate
-	 * 
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
 	public static Timestamp createTimeStamp(String aDate) {
 		return createTimeStamp(aDate, null);
 	}
 
-	/**
-	 * 
-	 * Uses java.text.SimpleDateFormat to parse the string using a pattern
-	 * Create a new timeStamp from a String using a pattern
-	 * 
-	 * @param aDate
-	 * @param timeFormatPattern
-	 *            A SimpleDateFormat pattern to parse the string, a default
-	 *            pattern 'yyyy/MM/dd hh:mm:ss z' if null.
-	 * 
-	 * @return
-	 * @throws IllegalArgumentException
-	 */
 	public static Timestamp createTimeStamp(String aDate,
 			String timeFormatPattern) {
 		if (null == timeFormatPattern) {
@@ -72,26 +34,12 @@ public class SimpleDateFormatUtil {
 		}
 	}
 
-	/**
-	 * Chacks if dates date1 and date2 are the same day
-	 * 
-	 * @param date1
-	 * @param date2
-	 * @return
-	 */
 	public static boolean sameDay(Timestamp date1, Timestamp date2) {
 		SimpleDateFormat sDFormat = new SimpleDateFormat(
 				SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD);
 		return sDFormat.format(date1).equals(sDFormat.format(date2));
 	}
 
-	/**
-	 * Get a string representation for a timestamp in a specified pattern
-	 * 
-	 * @param date
-	 * @param timeFormatPattern
-	 * @return
-	 */
 	public static String getDate(Timestamp date, String timeFormatPattern) {
 		if (null == timeFormatPattern) {
 			timeFormatPattern = SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD_HH_MM_SS_Z;
@@ -100,16 +48,6 @@ public class SimpleDateFormatUtil {
 		return sDFormat.format(date);
 	}
 
-	/**
-	 * Takes a duration and converts it into a long containing the miliseconds.
-	 * Input format: 3 hours 3 minutes
-	 * Input format: 3 hours 
-	 * Input format: 3 minutes
-	 * Input format: 3600000
-	 * 
-	 * @param duration
-	 * @return
-	 */
 	public static Long convertDurationToMiliseconds(String duration) {
 		long time = 0;
 		if (duration == null) {
@@ -137,21 +75,19 @@ public class SimpleDateFormatUtil {
 		return time;
 	}
 
-	/**
-	 * Creates a presentation in hours, minutes example result format: 1 hours,
-	 * 20 minutes
-	 * 
-	 * @param milliseconds
-	 * @return
-	 */
 	public static String convertToTimeSpent(Long milliseconds) {
 
 		long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
 		long minutesleft = milliseconds - TimeUnit.HOURS.toMillis(hours);
 		long minutes = TimeUnit.MILLISECONDS.toDays(minutesleft);
-		// String result =(days>0)?days + " days ":"";
 		String result = (hours > 0) ? hours + " " + DURATION_HOURS + " " : "";
 		result += (minutes > 0) ? minutes + " " + DURATION_MINUTES : "";
 		return result.trim();
+	}
+
+	public static String obtenerIdTransaccion() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssS");
+		String idTransaccion = df.format(new Date()).toString();
+		return idTransaccion;
 	}
 }

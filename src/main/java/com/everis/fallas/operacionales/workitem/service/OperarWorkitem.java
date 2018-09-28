@@ -1,6 +1,5 @@
 package com.everis.fallas.operacionales.workitem.service;
 
-
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -12,14 +11,20 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+
 import com.everis.fallas.operacionales.workitem.bean.Auditoria;
 import com.everis.fallas.operacionales.workitem.bean.Parametro;
 import com.everis.fallas.operacionales.workitem.bean.Request;
 import com.everis.fallas.operacionales.workitem.bean.Response;
+import com.everis.fallas.operacionales.workitem.bean.Stream;
 import com.everis.fallas.operacionales.workitem.bean.Workitem;
 import com.everis.fallas.operacionales.workitem.business.WorkItemInitialization;
-import com.everis.fallas.operacionales.workitem.util.Argument;
-import com.everis.fallas.operacionales.workitem.util.Repository;
+import com.everis.fallas.operacionales.workitem.utils.Argument;
+import com.everis.fallas.operacionales.workitem.utils.ConstantesUtil;
+import com.everis.fallas.operacionales.workitem.utils.RepositoryUtil;
+import com.everis.fallas.operacionales.workitem.utils.SimpleDateFormatUtil;
+import com.everis.fallas.operacionales.workitem.utils.TemplateUtil;
 import com.ibm.team.process.client.IProcessClientService;
 import com.ibm.team.process.common.IProjectArea;
 import com.ibm.team.repository.common.TeamRepositoryException;
@@ -29,19 +34,24 @@ import com.ibm.team.workitem.common.model.IWorkItem;
 import com.ibm.team.workitem.common.model.IWorkItemHandle;
 import com.ibm.team.workitem.common.model.IWorkItemType;
 
-
 @Path("/workitem")
 public class OperarWorkitem {
+	
 	Response response = new Response();
+	private final static Logger log = Logger.getLogger(OperarWorkitem.class);
+	private String message = "";
+	
 	@POST
 	@Path("/create")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response createWorkitem(Request request){
+		message = "[" + request.getAuditoria().getIdTransaccion() + "] - ";
+		log.info(message + "Inicio metodo (createWorkitem)");
 		List<Workitem> workitems = request.getWorkitem();
 		Auditoria audit = request.getAuditoria();
 		Argument argument = new Argument();
-		Repository conexion = new Repository(audit);
+		RepositoryUtil conexion = new RepositoryUtil(audit);
 		try {
 			argument.valid(workitems);
 			conexion.login();
@@ -58,12 +68,12 @@ public class OperarWorkitem {
 			response.setMensajeError(e.getMessage());
 		} finally {
 			conexion.logout();
-			System.out.println(response.getMensajeError());
+			log.info(message + response.getMensajeError());
 		}
 		return response;
 	}
 
-	private boolean run(Request request,Repository conexion) throws TeamRepositoryException {
+	private boolean run(Request request, RepositoryUtil conexion) throws TeamRepositoryException {
 		IProcessClientService processClient = (IProcessClientService) conexion.getTeamrepo()
 				.getClientLibrary(IProcessClientService.class);
 		IWorkItemClient workItemClient = (IWorkItemClient) conexion.getTeamrepo()
@@ -90,11 +100,11 @@ public class OperarWorkitem {
 			}
 			
 			List<Parametro> param = agregarRelaciones(workitem.getParametro(), wcode);
-			WorkItemInitialization operation = new WorkItemInitialization(param);
+			WorkItemInitialization operation = new WorkItemInitialization(param, message);
 			IWorkItemHandle handle = operation.run(workItemType, null);
 			IWorkItem workItem = auditableClient.resolveAuditable(handle, IWorkItem.FULL_PROFILE, null);
 			wcode.add(workItem.getId());
-			System.out.println("Elemento de trabajo creado correctamente: " + workItem.getId() + " (" + workItem.getHTMLSummary().getPlainText().toString() + ").");
+			log.info(message + "Elemento de trabajo creado correctamente: " + workItem.getId() + " (" + workItem.getHTMLSummary().getPlainText().toString() + ").");
 			listaWorkitem.add(workItem.getId() + "|" + workItem.getHTMLSummary().getPlainText().toString());
 		}
 		response.setListaWorkitem(listaWorkitem);
@@ -117,7 +127,7 @@ public class OperarWorkitem {
 					newParam.setValue(value);
 					newParams.add(newParam);
 				} catch (Exception e) {
-					System.out.println("Ocurrio un error al obtener la relacion: " + e.getMessage());
+					log.info(message + "Ocurrio un error al obtener la relacion: " + e.getMessage());
 				}
 			} else {
 				Parametro newParam = new Parametro();
@@ -130,19 +140,59 @@ public class OperarWorkitem {
 	}
 
 	private IProjectArea obtenerArea(String area, IProcessClientService processClient) {
-		URI uri = URI.create(area.replaceAll(" ", "%20"));
+		URI uri = URI.create(area.replaceAll(ConstantesUtil.ETIQUETA_ESPACIO, ConstantesUtil.REGEX_SPACE));
 		IProjectArea projectArea = null;
 		try {
 			projectArea = (IProjectArea) processClient.findProcessArea(uri, null, null);
 			if (projectArea == null) {
-				System.out.println("No se encontro el area de proyecto: " + area);
+				log.info(message + "No se encontro el area de proyecto: " + area);
 			} else {
-				System.out.println("Se encontro el area de proyecto: " + projectArea.getName());
+				log.info(message + "Se encontro el area de proyecto: " + projectArea.getName());
 			}
 		} catch (TeamRepositoryException e) {
-			System.out.println("Error al buscar el area de proyecto: " + area);
+			log.info(message + "Error al buscar el area de proyecto: " + area);
 			e.printStackTrace();
 		}
 		return projectArea;
+	}
+
+	@POST
+	@Path("/search")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public Response buscarWorkitem(Request request)
+	{
+		Auditoria audit = request.getAuditoria();
+		RepositoryUtil conexion = new RepositoryUtil(audit);
+		try {
+			conexion.login();
+		} catch (SocketTimeoutException e) {
+			e.printStackTrace();
+		} catch (TeamRepositoryException e) {
+			e.printStackTrace();
+		} finally {
+			conexion.logout();
+		}
+		response.setMensajeError("Proceso Exitoso");
+		response.setCodigoError("0");
+		return response;
+	}
+	
+	@POST
+	@Path("/template")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	public List<Workitem> buildPerStream(List<String> streams)
+	{
+		List<Workitem> workitems = new ArrayList<Workitem>();
+		String idTransaccion = SimpleDateFormatUtil.obtenerIdTransaccion();
+		message = "[" + idTransaccion + "] - ";
+		log.info(message + "Inicio metodo (buildPerStream)");
+		for (String string : streams) {
+			Stream str = new Stream(string);
+			List<Workitem> wis = TemplateUtil.build(str, message);
+			workitems.addAll(wis);
+		}
+		return workitems;
 	}
 }

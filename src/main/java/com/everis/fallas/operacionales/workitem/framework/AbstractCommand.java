@@ -9,7 +9,7 @@ package com.everis.fallas.operacionales.workitem.framework;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.everis.fallas.operacionales.workitem.OperationResult;
+import com.everis.fallas.operacionales.workitem.common.OperationResult;
 import com.everis.fallas.operacionales.workitem.parameter.ParameterManager;
 import com.ibm.team.repository.common.TeamRepositoryException;
 

@@ -7,7 +7,7 @@
  *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.parameter;
 
-import com.everis.fallas.operacionales.workitem.IWorkItemCommandLineConstants;
+import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
 import com.everis.fallas.operacionales.workitem.framework.WorkItemCommandLineException;
 
 /**

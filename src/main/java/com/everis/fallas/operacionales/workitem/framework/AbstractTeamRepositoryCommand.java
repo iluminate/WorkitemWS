@@ -9,8 +9,8 @@ package com.everis.fallas.operacionales.workitem.framework;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import com.everis.fallas.operacionales.workitem.IWorkItemCommandLineConstants;
-import com.everis.fallas.operacionales.workitem.OperationResult;
+import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
+import com.everis.fallas.operacionales.workitem.common.OperationResult;
 import com.everis.fallas.operacionales.workitem.parameter.ParameterManager;
 import com.ibm.team.process.client.IProcessClientService;
 import com.ibm.team.repository.client.ITeamRepository;

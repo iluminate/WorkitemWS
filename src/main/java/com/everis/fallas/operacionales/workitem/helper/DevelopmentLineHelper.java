@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.helper;
 
 import java.util.List;
@@ -24,21 +17,11 @@ import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.workitem.client.IAuditableClient;
 import com.ibm.team.workitem.common.model.ItemProfile;
 
-/**
- * Helper class for development lines and iterations. Allows to find a
- * development line and enclosed iteration for a project area.
- * 
- * 
- */
 public class DevelopmentLineHelper {
-
+	
 	private enum Mode {
 		BYID, BYNAME, BYLABEL
 	};
-
-	// Support different compare modes to search development lines and
-	// iterations by ID, DisplayName or by Label (ID if DsplayName not
-	// specified)
 	public static final Mode BYID = Mode.BYID;
 	public static final Mode BYNAME = Mode.BYNAME;
 	public static final Mode BYLABEL = Mode.BYLABEL;
@@ -47,12 +30,6 @@ public class DevelopmentLineHelper {
 	private IProgressMonitor fMonitor;
 	private IAuditableClient fAuditableClient;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param teamRepository
-	 * @param monitor
-	 */
 	public DevelopmentLineHelper(ITeamRepository teamRepository,
 			IProgressMonitor monitor) {
 		fTeamRepository = teamRepository;
@@ -82,13 +59,13 @@ public class DevelopmentLineHelper {
 			String compare = "";
 			switch (comparemode) {
 			case BYID:
-				compare = developmentLine.getId();
+				compare = developmentLine.getId().trim();
 				break;
 			case BYNAME:
-				compare = developmentLine.getName();
+				compare = developmentLine.getName().trim();
 				break;
 			case BYLABEL:
-				compare = developmentLine.getLabel();
+				compare = developmentLine.getLabel().trim();
 				break;
 			}
 			if (fookFor.equals(compare)) {
@@ -145,13 +122,13 @@ public class DevelopmentLineHelper {
 			String compare = "";
 			switch (comparemode) {
 			case BYID:
-				compare = iteration.getId();
+				compare = iteration.getId().trim();
 				break;
 			case BYNAME:
-				compare = iteration.getName();
+				compare = iteration.getName().trim();
 				break;
 			case BYLABEL:
-				compare = iteration.getLabel();
+				compare = iteration.getLabel().trim();
 				break;
 			}
 			if (lookFor.equals(compare)) {

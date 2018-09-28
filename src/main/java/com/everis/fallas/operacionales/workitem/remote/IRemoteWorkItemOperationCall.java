@@ -10,7 +10,7 @@ package com.everis.fallas.operacionales.workitem.remote;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import com.everis.fallas.operacionales.workitem.OperationResult;
+import com.everis.fallas.operacionales.workitem.common.OperationResult;
 import com.ibm.team.repository.common.TeamRepositoryException;
 
 /**
