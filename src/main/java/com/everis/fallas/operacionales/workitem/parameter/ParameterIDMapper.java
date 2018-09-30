@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.parameter;
 
 import java.util.HashMap;
@@ -12,73 +5,21 @@ import java.util.Set;
 
 import com.ibm.team.workitem.common.model.IWorkItem;
 
-/**
- * Simple mapping tool to provide custom aliases that can be used for attribute
- * ID's.
- * 
- * <pre>
- * 
- * Internal and external ID's for built in attributes 
- * 
- * Archived 			ID: archived				External_ID: archived 	
- * Corrected Estimate 	ID: correctedEstimate		External_ID: com.ibm.team.workitem.attribute.correctedestimate
- * Created By 			ID: creator 				External_ID: com.ibm.team.workitem.attribute.creator
- * Creation Date 		ID: creationDate 			External_ID: com.ibm.team.workitem.attribute.creationdate
- * Due Date 			ID: dueDate					External_ID: com.ibm.team.workitem.attribute.duedate
- * Description 			ID: description				External_ID: com.ibm.team.workitem.attribute.description
- * Estimate 			ID: duration				External_ID: com.ibm.team.workitem.attribute.duration
- * Filed Against	 	ID: category				External_ID: com.ibm.team.workitem.attribute.category
- * Found In 			ID: foundIn					External_ID: com.ibm.team.workitem.attribute.version
- * Id 					ID: id 						External_ID: com.ibm.team.workitem.attribute.id
- * Modified Date 		ID: modified 				External_ID: com.ibm.team.workitem.attribute.modified	
- * Modified By 		 	ID: modifiedBy				External_ID: com.ibm.team.workitem.attribute.modifiedby
- * Owned By 			ID: owner					External_ID: com.ibm.team.workitem.attribute.owner
- * Planned For 			ID: target					External_ID: com.ibm.team.workitem.attribute.target
- * Priority 			ID: internalPriority		External_ID: com.ibm.team.workitem.attribute.priority
- * Project Area 		ID: projectArea				External_ID: com.ibm.team.workitem.attribute.projectarea
- * Resolution 			ID: internalResolution		External_ID: com.ibm.team.workitem.attribute.resolutiondate	
- * Resolution Date 		ID: resolutionDate			External_ID: com.ibm.team.workitem.attribute.resolutiondate
- * Resolved By 			ID: resolver				External_ID: com.ibm.team.workitem.attribute.resolver
- * Restricted Access 	ID: contextId				External_ID: contextId
- * Severity 			ID: internalSeverity		External_ID: com.ibm.team.workitem.attribute.severity
- * Start Date 			ID: startDate				External_ID: startDate
- * Status 				ID: internalState			External_ID: com.ibm.team.workitem.attribute.state
- * Subscribed By 		ID: internalSubscriptions	External_ID: com.ibm.team.workitem.attribute.subscriptions
- * Summary 				ID: summary					External_ID: com.ibm.team.workitem.attribute.summary
- * Tags 				ID: internalTags			External_ID: com.ibm.team.workitem.attribute.tags
- * Time Spent 			ID: timeSpent				External_ID: com.ibm.team.workitem.attribute.timespent
- * Type		 			ID: workItemType			External_ID: com.ibm.team.workitem.attribute.workitemtype
- * 
- * </pre>
- * 
- */
 public class ParameterIDMapper {
 
-	// This is a special external ID that is used during export/mapping
 	public static final String ID_COM_IBM_TEAM_WORKITEM_ATTRIBUTE_WORKITEMTYPE = "com.ibm.team.workitem.attribute.workitemtype";
-	// Pseudo Attribute Attachments
 	public static final String PSEUDO_ATTRIBUTE_ATTACHMENTS = "Attachments";
 
 	protected HashMap<String, String> iDMap = null;
 
 	private static ParameterIDMapper theMapper = null;
 
-	/**
-	 * Constructor
-	 * 
-	 */
-	private ParameterIDMapper() {
+					private ParameterIDMapper() {
 		this.iDMap = new HashMap<String, String>();
 		setMappings();
 	}
 
-	/**
-	 * Create the mapping of aliases/display names for attributes to the
-	 * internal representation
-	 * 
-	 */
-	private void setMappings() {
-		// JavaScript
+						private void setMappings() {
 		putMap("SEVERITY", IWorkItem.SEVERITY_PROPERTY);
 		putMap("PRIORITY", IWorkItem.PRIORITY_PROPERTY);
 		putMap("FOUND_IN", IWorkItem.FOUND_IN_PROPERTY);
@@ -104,7 +45,6 @@ public class ParameterIDMapper {
 		putMap("MODIFIED", IWorkItem.MODIFIED_PROPERTY);
 		putMap("MODIFIED_BY", IWorkItem.MODIFIED_BY_PROPERTY);
 
-		// Importer
 		putMap("com.ibm.team.workitem.attribute.severity",
 				IWorkItem.SEVERITY_PROPERTY);
 		putMap("com.ibm.team.workitem.attribute.priority",
@@ -152,78 +92,37 @@ public class ParameterIDMapper {
 				IWorkItem.MODIFIED_BY_PROPERTY);
 	}
 
-	/**
-	 * This is a singleton
-	 * 
-	 * @return the mapper
-	 */
-	private static ParameterIDMapper getMapper() {
+						private static ParameterIDMapper getMapper() {
 		if (theMapper == null) {
 			theMapper = new ParameterIDMapper();
 		}
 		return theMapper;
 	}
 
-	/**
-	 * Check if there is an alias available for a property ID and pass it back
-	 * if available.
-	 * 
-	 * @param propertyID
-	 *            - the ID of the property
-	 * @return the alias or the original property
-	 */
-	public static String getAlias(String propertyID) {
+									public static String getAlias(String propertyID) {
 		return getMapper().getFromAlias(propertyID);
 	}
 
-	/**
-	 * To print in help
-	 * 
-	 * @return
-	 */
-	public static String helpParameterMappings() {
+						public static String helpParameterMappings() {
 		return getMapper().helpMappings();
 	}
 
-	/**
-	 * Get the whole map
-	 * 
-	 * @return
-	 */
-	protected HashMap<String, String> getMap() {
+						protected HashMap<String, String> getMap() {
 		return this.iDMap;
 	}
 
-	/**
-	 * Put an entry into the map
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	protected void putMap(String key, String value) {
+							protected void putMap(String key, String value) {
 		getMap().put(key, value);
 	}
 
-	/**
-	 * Check if there is an alias available for a property ID and pass it back
-	 * if available.
-	 * 
-	 * @param propertyID
-	 * @return
-	 */
-	public String getFromAlias(String propertyID) {
+								public String getFromAlias(String propertyID) {
 		String newVal = iDMap.get(propertyID);
 		if (null != newVal)
 			return newVal;
 		return propertyID;
 	}
 
-	/**
-	 * Generate help content
-	 * 
-	 * @return a string with
-	 */
-	private String helpMappings() {
+						private String helpMappings() {
 		String mappings = "Available mappings:\n";
 
 		Set<String> keys = iDMap.keySet();

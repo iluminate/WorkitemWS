@@ -23,17 +23,7 @@ import com.ibm.team.workitem.common.model.WorkItemEndPoints;
 
 public class AttachmentUtil {
 
-	/**
-	 * Save all attachments of a work item to disk
-	 * 
-	 * @param workItem
-	 *            - the work item
-	 * @param folder
-	 *            - the folder name to save to
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static List<IAttachment> saveAttachmentsToDisk(File folder,
+											public static List<IAttachment> saveAttachmentsToDisk(File folder,
 			IWorkItem workItem, IWorkItemCommon workItemCommon,
 			IProgressMonitor monitor) throws TeamRepositoryException {
 		List<IAttachment> resultList = new ArrayList<IAttachment>();
@@ -50,16 +40,7 @@ public class AttachmentUtil {
 		return resultList;
 	}
 
-	/**
-	 * Saves one attachment to disk
-	 * 
-	 * @param attachment
-	 *            - the attachment to save
-	 * @param folder
-	 *            - the folder name to save into
-	 * @throws TeamRepositoryException
-	 */
-	public static IAttachment saveAttachmentToDisk(IAttachment attachment,
+										public static IAttachment saveAttachmentToDisk(IAttachment attachment,
 			File folder, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		String attachmentFileName = folder.getAbsolutePath() + File.separator
@@ -84,20 +65,12 @@ public class AttachmentUtil {
 		}
 	}
 
-	/**
-	 * Finds all attachments of a workitem
-	 * 
-	 * @return - a list of the attachments
-	 * @throws TeamRepositoryException
-	 */
-	public static List<IAttachment> findAttachments(IWorkItem workItem,
+							public static List<IAttachment> findAttachments(IWorkItem workItem,
 			IWorkItemCommon workItemCommon, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		List<IAttachment> foundAttachments = new ArrayList<IAttachment>();
-		// get all the references
 		IWorkItemReferences references = workItemCommon
 				.resolveWorkItemReferences(workItem, monitor);
-		// narrow down to the attachments
 		List<IReference> attachments = references
 				.getReferences(WorkItemEndPoints.ATTACHMENT);
 		for (IReference aReference : attachments) {
@@ -113,12 +86,7 @@ public class AttachmentUtil {
 		return foundAttachments;
 	}
 
-	/**
-	 * Remove all attachments from a work item
-	 * 
-	 * @throws TeamRepositoryException
-	 */
-	public static void removeAllAttachments(IWorkItem workItem,
+						public static void removeAllAttachments(IWorkItem workItem,
 			IWorkItemCommon workItemCommon, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		List<IAttachment> allAttachments = findAttachments(workItem,
@@ -128,16 +96,7 @@ public class AttachmentUtil {
 		}
 	}
 
-	/**
-	 * Remove an attachment if the filename and the description are the same
-	 * 
-	 * @param fileName
-	 *            - the filename of the attachment
-	 * @param description
-	 *            - the description of the attachment
-	 * @throws TeamRepositoryException
-	 */
-	public static void removeAttachment(String fileName, String description,
+										public static void removeAttachment(String fileName, String description,
 			IWorkItem workItem, IWorkItemCommon workItemCommon,
 			IProgressMonitor monitor) throws TeamRepositoryException {
 		File thisFile = new File(fileName);

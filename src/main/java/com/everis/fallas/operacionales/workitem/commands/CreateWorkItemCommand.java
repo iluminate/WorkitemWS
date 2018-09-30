@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.commands;
 
 import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
@@ -22,18 +15,9 @@ import com.ibm.team.workitem.common.model.IWorkItem;
 import com.ibm.team.workitem.common.model.IWorkItemHandle;
 import com.ibm.team.workitem.common.model.IWorkItemType;
 
-/**
- * Command to create a work item, set the provided values and save it. The
- * operation is governed by the process and might fail if required parameters
- * are missing.
- * 
- */
 public class CreateWorkItemCommand extends AbstractWorkItemModificationCommand {
 
-	/**
-	 * @param parametermanager
-	 */
-	public CreateWorkItemCommand(ParameterManager parametermanager) {
+				public CreateWorkItemCommand(ParameterManager parametermanager) {
 		super(parametermanager);
 	}
 
@@ -42,16 +26,8 @@ public class CreateWorkItemCommand extends AbstractWorkItemModificationCommand {
 		return IWorkItemCommandLineConstants.COMMAND_CREATE;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.ibm.js.team.workitem.commandline.framework.
-	 * AbstractWorkItemCommandLineCommand#setRequiredParameters()
-	 */
-	public void setRequiredParameters() {
+							public void setRequiredParameters() {
 		super.setRequiredParameters();
-		// Add the parameters required to perform the operation
-		// getParameterManager().syntaxCommand()
 		getParameterManager()
 				.syntaxAddRequiredParameter(
 						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY,
@@ -71,21 +47,12 @@ public class CreateWorkItemCommand extends AbstractWorkItemModificationCommand {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.ibm.js.team.workitem.commandline.framework.
-	 * AbstractWorkItemCommandLineCommand#process()
-	 */
-	@Override
+							@Override
 	public OperationResult process() throws TeamRepositoryException {
-		// Get the parameters such as project area name and Attribute Type and
-		// run the operation
 		String projectAreaName = getParameterManager()
 				.consumeParameter(
 						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY)
 				.trim();
-		// Find the project area
 		IProjectArea projectArea = ProcessAreaUtil.findProjectAreaByFQN(
 				projectAreaName, getProcessClientService(), getMonitor());
 		if (projectArea == null) {
@@ -96,23 +63,14 @@ public class CreateWorkItemCommand extends AbstractWorkItemModificationCommand {
 		String workItemTypeID = getParameterManager().consumeParameter(
 				IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY)
 				.trim();
-		// Find the work item type
 		IWorkItemType workItemType = WorkItemTypeHelper.findWorkItemType(
 				workItemTypeID, projectArea.getProjectArea(),
 				getWorkItemCommon(), getMonitor());
-		// Create the work item
 		createWorkItem(workItemType);
 		return this.getResult();
 	}
 
-	/**
-	 * Create the work item and set the required attribute values.
-	 * 
-	 * @param workItemType
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private boolean createWorkItem(IWorkItemType workItemType)
+								private boolean createWorkItem(IWorkItemType workItemType)
 			throws TeamRepositoryException {
 
 		ModifyWorkItem operation = new ModifyWorkItem("Creating Work Item");

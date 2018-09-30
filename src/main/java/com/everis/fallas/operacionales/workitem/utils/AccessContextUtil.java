@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.utils;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -20,27 +13,11 @@ import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.repository.common.UUID;
 import com.ibm.team.workitem.common.IAuditableCommon;
 
-/**
- * Utility Class to help with access context
- * 
- */
 public class AccessContextUtil {
 
-	/**
-	 * String representation for public access
-	 */
-	public static final String PUBLIC_ACCESS = "Public";
+				public static final String PUBLIC_ACCESS = "Public";
 
-	/**
-	 * For a given value from the restricted access attribute, compute the name
-	 * of the object. First try if this is a project area, then try a team area,
-	 * finally search through the groups.
-	 * 
-	 * @param uuid
-	 * @return An UUID for public access, a IProjectArea, a ITeamArea, a
-	 *         IAccessGroup or null
-	 */
-	public static Object getAccessContextFromUUID(UUID uuid,
+										public static Object getAccessContextFromUUID(UUID uuid,
 			ITeamRepository teamRepository, IAuditableCommon auditableCommon,
 			IProgressMonitor monitor) {
 		if (uuid == null) {
@@ -54,44 +31,28 @@ public class AccessContextUtil {
 					teamRepository, monitor);
 			return area;
 		} catch (Exception e) {
-			// Catch unwanted exceptions thrown by the API
 		}
 		try {
 			ITeamArea area = ProcessAreaUtil.getTeamAreaFormUUID(uuid,
 					teamRepository, monitor);
 			return area.getName();
 		} catch (Exception e) {
-			// Catch unwanted exceptions thrown by the API
 		}
 		IAccessGroup[] groups;
 		try {
 			groups = auditableCommon.getAccessGroups(null, Integer.MAX_VALUE,
 					monitor);
 			for (IAccessGroup group : groups) {
-				// Compare to the contextID and not the uuid value.
 				if (group.getContextId().equals(uuid)) {
 					return group;
 				}
 			}
 		} catch (TeamRepositoryException e) {
-			// Catch unwanted exceptions thrown by the API
 		}
 		return null;
 	}
 
-	/**
-	 * Get an UUID from a process area or access group name - this is typically
-	 * used for restricted access
-	 * 
-	 * @param value
-	 * @param teamRepository
-	 * @param auditableCommon
-	 * @param processClient
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static UUID getAccessContextFromFQN(String value,
+													public static UUID getAccessContextFromFQN(String value,
 			ITeamRepository teamRepository, IAuditableCommon auditableCommon,
 			IProcessClientService processClient, IProgressMonitor monitor)
 			throws TeamRepositoryException {
@@ -108,20 +69,17 @@ public class AccessContextUtil {
 				return processArea.getContextId();
 			}
 		} catch (TeamRepositoryException e) {
-			// Catch unwanted exceptions thrown by the API
 		}
 		IAccessGroup[] groups;
 		try {
 			groups = auditableCommon.getAccessGroups(null, Integer.MAX_VALUE,
 					monitor);
 			for (IAccessGroup group : groups) {
-				// Compare to the contextID and not the uuid value.
 				if (group.getName().equals(value)) {
 					return group.getContextId();
 				}
 			}
 		} catch (TeamRepositoryException e) {
-			// Catch unwanted exceptions thrown by the API
 		}
 		return null;
 	}

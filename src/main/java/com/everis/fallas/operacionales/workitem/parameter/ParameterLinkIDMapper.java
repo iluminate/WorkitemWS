@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.parameter;
 
 import java.util.HashMap;
@@ -12,13 +5,8 @@ import java.util.Set;
 
 import com.everis.fallas.operacionales.workitem.utils.ReferenceUtil;
 
-/**
- * Simple mapping tool to provide custom aliases that can be used for link ID's.
- * 
- */
 public class ParameterLinkIDMapper {
 
-	// RTC Export Link type column header
 	public static final String LINKNAME_AFFECTED_BY_DEFECT = "Affected by Defect";
 	public static final String LINKNAME_AFFECTS_PLAN_ITEM = "Affects Plan Item";
 	public static final String LINKNAME_AFFECTS_REQUIREMENT = "Affects Requirement";
@@ -50,33 +38,6 @@ public class ParameterLinkIDMapper {
 	public static final String LINKNAME_TESTED_BY_TEST_CASE = "Tested By Test Case";
 	public static final String LINKNAME_TRACKS = "Tracks";
 	public static final String LINKNAME_TRACKS_REQUIREMENT = "Tracks Requirement";
-	// public static final String LINKNAME_CHANGE_SETS = "Change Sets";
-	// public static final String LINKNAME_ATTACHMENTS = "Attachments";
-	// public static final String LINKNAME_CHANGE_SETS_FILL_GAPS =
-	// "Change Sets That Fill Gaps";
-	// public static final String link10 = "Change Sets That Were Not Promoted";
-	// public static final String link12 = "ClearCase Activities";
-	// public static final String link13 = "ClearCase Versions";
-	// public static final String link18 = "Deployment Definition";
-	// public static final String link19 = "Deployment Result";
-	// public static final String link23 = "importer dependency";
-	// public static final String link25 = "Included in Deployments";
-	// public static final String link26 = "Included in Packages";
-	// public static final String link27 = "Included in Promotions";
-	// public static final String link28 = "Mentions";
-	// public static final String link29 = "Packaging Definition";
-	// public static final String link30 = "Packaging Result";
-	// public static final String link31 = "Packaging Summary Work Item";
-	// public static final String link34 = "Previously Promoted Change Sets";
-	// public static final String link35 = "Promoted Build Maps";
-	// public static final String link36 = "Promoted Change Sets";
-	// public static final String link37 = "Promoted Work Items";
-	// public static final String link38 = "Promotion Build Result";
-	// public static final String link39 = "Promotion Definition";
-	// public static final String link51 = "SVN Revisions";
-	// public static final String link53 = "Time Sheet Entry";
-	// public static final String link56 = "tracks UCM object";
-	// public static final String link57 = "Work Items Included in Packages";
 
 	protected HashMap<String, String> iDMap = null;
 	private static ParameterLinkIDMapper theMapper = null;
@@ -87,14 +48,7 @@ public class ParameterLinkIDMapper {
 		setMappings();
 	}
 
-	/**
-	 * Creates a map from an external name (alias) to the internal
-	 * representation
-	 * 
-	 * putMap("key", "Value");
-	 */
-	protected void setMappings() {
-		// TOD: ReferenceUtil.LINKTYPE_RELATED_CHANGE_MANAGEMENT
+							protected void setMappings() {
 		putMap(LINKNAME_AFFECTED_BY_DEFECT,
 				ReferenceUtil.LINKTYPE_AFFECTED_BY_DEFECT);
 		putMap(LINKNAME_AFFECTS_TEST_RESULT,
@@ -122,7 +76,6 @@ public class ParameterLinkIDMapper {
 		putMap(LINKNAME_PARENT, ReferenceUtil.LINKTYPE_PARENT);
 		putMap(LINKNAME_PREDECESSOR,
 				ReferenceUtil.LINKTYPE_PREDECESSOR_WORKITEM);
-		// putMap(, ReferenceUtil.LINKTYPE_RELATED_CHANGE_MANAGEMENT);
 		putMap(LINKNAME_RELATED_ARTIFACTS,
 				ReferenceUtil.LINKTYPE_RELATED_ARTIFACT);
 		putMap(LINKNAME_RELATED_TEST_CASE,
@@ -140,52 +93,27 @@ public class ParameterLinkIDMapper {
 		putMap(LINKNAME_SUCCESSOR, ReferenceUtil.LINKTYPE_SUCCESSOR_WORKITEM);
 		putMap(LINKNAME_TESTED_BY_TEST_CASE,
 				ReferenceUtil.LINKTYPE_TESTED_BY_TEST_CASE);
-		// putMap(LINKNAME_TRACKS, ReferenceUtil.LINKTYPE_TRACKS_CHANGES);
 		putMap(LINKNAME_TRACKS_REQUIREMENT,
 				ReferenceUtil.LINKTYPE_TRACKS_REQUIREMENT);
 		putMap(LINKNAME_TRACKS, ReferenceUtil.LINKTYPE_TRACKS_WORK_ITEM);
-		// putMap(, ReferenceUtil.);
 	}
 
-	/**
-	 * Put an entry into the map
-	 * 
-	 * @param key
-	 *            - The external name or alias of the link (attribute)
-	 * @param value
-	 *            - The internal representation
-	 */
-	protected void putMap(String key, String value) {
+									protected void putMap(String key, String value) {
 		getMap().put(key, value);
 	}
 
-	/**
-	 * Get the map
-	 * 
-	 * @return
-	 */
-	protected HashMap<String, String> getMap() {
+						protected HashMap<String, String> getMap() {
 		return this.iDMap;
 	}
 
-	/**
-	 * Check if there is an alias available for a property ID and pass it back
-	 * if available.
-	 * 
-	 * @param linkName
-	 * @return
-	 */
-	public String getFromAlias(String linkName) {
+								public String getFromAlias(String linkName) {
 		String newVal = iDMap.get(linkName);
 		if (null != newVal)
 			return newVal;
 		return linkName;
 	}
 
-	/**
-	 * @return a string with
-	 */
-	public String helpMappings() {
+				public String helpMappings() {
 		String mappings = "Available mappings:\n";
 
 		Set<String> keys = iDMap.keySet();
@@ -195,45 +123,22 @@ public class ParameterLinkIDMapper {
 		return mappings + "\n";
 	}
 
-	/**
-	 * This is a singleton
-	 * 
-	 * @return the mapper
-	 */
-	private static ParameterLinkIDMapper getMapper() {
+						private static ParameterLinkIDMapper getMapper() {
 		if (theMapper == null) {
 			theMapper = new ParameterLinkIDMapper();
 		}
 		return theMapper;
 	}
 
-	/**
-	 * Check if there is an alias available for a link name and pass the ID it
-	 * back if available.
-	 * 
-	 * @param linkName
-	 *            - the ID of the property
-	 * @return the alias or the original property
-	 */
-	public static String getinternalID(String linkName) {
+									public static String getinternalID(String linkName) {
 		return getMapper().getFromAlias(linkName);
 	}
 
-	/**
-	 * Help to display
-	 * 
-	 * @return
-	 */
-	public static String helpParameterMappings() {
+						public static String helpParameterMappings() {
 		return getMapper().helpMappings();
 	}
 
-	/**
-	 * Get all the external link names (alias)
-	 * 
-	 * @return
-	 */
-	public static Set<String> getLinkNames() {
+						public static Set<String> getLinkNames() {
 		return getMapper().getMap().keySet();
 	}
 }

@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.framework;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -21,13 +14,6 @@ import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.workitem.common.IAuditableCommon;
 import com.ibm.team.workitem.common.IWorkItemCommon;
 
-/**
- * This class handles the basic functionality to interact with a RTC team
- * repository, especially the login process.
- * 
- * The class can be used as base class to implement new commands.
- * 
- */
 public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 
 	private ITeamRepository fTeamRepository;
@@ -36,16 +22,7 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 		super(parametermanager);
 	}
 
-	/**
-	 * Overriding classes should call super to get the parameters added These
-	 * are the basic parameters that are always needed to interact with the
-	 * repository
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see com.everis.fallas.operacionales.workitem.framework.AbstractCommand#setRequiredParameters()
-	 */
-	@Override
+										@Override
 	public void setRequiredParameters() {
 		getParameterManager()
 				.syntaxAddRequiredParameter(
@@ -63,8 +40,6 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 
 	@Override
 	public void initialize() {
-		// I need the team platform to be started here.
-		// To be able to access the aliases
 		if (!TeamPlatform.isStarted()) {
 			System.out.println("Starting Team Platform ...");
 			TeamPlatform.startup();
@@ -77,7 +52,6 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 			throws TeamRepositoryException {
 
 		try {
-			// Login to the repository
 			this.fTeamRepository = login();
 		} catch (TeamRepositoryException e) {
 			this.appendResultString("TeamRepositoryException: Unable to log into repository!");
@@ -101,40 +75,24 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 		return fTeamRepository;
 	}
 
-	/**
-	 * @return the IProcessClientService
-	 */
-	protected IProcessClientService getProcessClientService() {
+				protected IProcessClientService getProcessClientService() {
 		IProcessClientService fProcessClient = (IProcessClientService) getTeamRepository()
 				.getClientLibrary(IProcessClientService.class);
 		return fProcessClient;
 	}
 
-	/**
-	 * @return the IWorkItemCommon
-	 */
-	protected IWorkItemCommon getWorkItemCommon() {
+				protected IWorkItemCommon getWorkItemCommon() {
 		IWorkItemCommon workItemClient = (IWorkItemCommon) getTeamRepository()
 				.getClientLibrary(IWorkItemCommon.class);
 		return workItemClient;
 	}
 
-	/**
-	 * @return the IAuditableCommon
-	 */
-	protected IAuditableCommon getAuditableCommon() {
+				protected IAuditableCommon getAuditableCommon() {
 		return (IAuditableCommon) getTeamRepository().getClientLibrary(
 				IAuditableCommon.class);
 	}
 
-	/**
-	 * Log into the teamrepository. Get the parameters from the parameter
-	 * managers list and use the values.
-	 * 
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private ITeamRepository login() throws TeamRepositoryException {
+								private ITeamRepository login() throws TeamRepositoryException {
 		String repository = getParameterManager()
 				.consumeParameter(
 						IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY);
@@ -150,11 +108,7 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 		return teamRepository;
 	}
 
-	/**
-	 * Internal login handler to perform the login to the repository
-	 * 
-	 */
-	private static class LoginHandler implements ILoginHandler, ILoginInfo {
+					private static class LoginHandler implements ILoginHandler, ILoginInfo {
 
 		private String fUserId;
 		private String fPassword;

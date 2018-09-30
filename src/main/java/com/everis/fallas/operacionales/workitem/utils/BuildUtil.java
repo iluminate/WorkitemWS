@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 20015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.utils;
 
 import java.util.ArrayList;
@@ -26,17 +19,7 @@ import com.ibm.team.repository.common.UUID;
 
 public class BuildUtil {
 
-	/**
-	 * Finds a build result with a given label ID
-	 * 
-	 * @param buildResultID
-	 *            - the string representation of the build result ID
-	 * @param monitor
-	 * @return the buildresult that was found
-	 * @throws TeamRepositoryException
-	 * @throws WorkItemCommandLineException
-	 */
-	public static IBuildResult findBuildResultbyID(String buildResultID,
+											public static IBuildResult findBuildResultbyID(String buildResultID,
 			ITeamRepository teamRepository, IProgressMonitor monitor)
 			throws TeamRepositoryException, WorkItemCommandLineException {
 
@@ -76,18 +59,7 @@ public class BuildUtil {
 				+ buildResultID);
 	}
 
-	/**
-	 * Finds a build result with a given label ID
-	 * 
-	 * @param monitor
-	 * 
-	 * @param buildResultID
-	 *            - the string representation of the build result ID
-	 * @return the buildresult that was found
-	 * @throws TeamRepositoryException
-	 * @throws WorkItemCommandLineException
-	 */
-	public static IBuildResult resolveBuildResult(
+												public static IBuildResult resolveBuildResult(
 			IBuildResultHandle buildResult, ITeamRepository teamRepository,
 			IProgressMonitor monitor) throws TeamRepositoryException,
 			WorkItemCommandLineException {
@@ -120,16 +92,7 @@ public class BuildUtil {
 				+ buildResult.getItemId());
 	}
 
-	/**
-	 * Resolve a build definition from an handle
-	 * 
-	 * @param buildDefinition
-	 * @param teamRepository
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IBuildDefinition resolveBuildDefinition(
+										public static IBuildDefinition resolveBuildDefinition(
 			IBuildDefinitionHandle buildDefinition,
 			ITeamRepository teamRepository, IProgressMonitor monitor)
 			throws TeamRepositoryException {

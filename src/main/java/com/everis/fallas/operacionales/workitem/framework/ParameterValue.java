@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 20015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.framework;
 
 import java.util.List;
@@ -18,13 +11,7 @@ import com.ibm.team.process.common.IProjectAreaHandle;
 import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.workitem.common.model.IAttribute;
 
-/**
- * Internal class to manage parameter data and allow easy access to the
- * parameter names, values and modes
- * 
- */
 public class ParameterValue {
-	// default mode different behaviour for simple and multi value types
 	private String mode = MODE_DEFAULT;
 	private String attributeID = null;
 	private String value = null;
@@ -35,30 +22,15 @@ public class ParameterValue {
 	public static final String MODE_REMOVE = "remove";
 	public static final String MODE_ADD = "add";
 	public static final String MODE_SET = "set";
-	// Update Modes
 	public static final String MODE_DEFAULT = "default";
 
-	/**
-	 * Constructor to create the value
-	 * 
-	 * @param parameter
-	 * @param value
-	 * @throws WorkItemCommandLineException
-	 */
-	public ParameterValue(String parameter, String value,
+								public ParameterValue(String parameter, String value,
 			IProjectAreaHandle projectAreaHandle, IProgressMonitor monitor)
 			throws WorkItemCommandLineException {
 		analyzeValue(parameter, value, projectAreaHandle, monitor);
 	}
 
-	/**
-	 * @param parameter
-	 * @param value
-	 * @param projectAreaHandle
-	 * @param monitor
-	 * @throws WorkItemCommandLineException
-	 */
-	private void analyzeValue(String parameter, String value,
+								private void analyzeValue(String parameter, String value,
 			IProjectAreaHandle projectAreaHandle, IProgressMonitor monitor)
 			throws WorkItemCommandLineException {
 		fProjectAreaHandle = projectAreaHandle;
@@ -84,25 +56,15 @@ public class ParameterValue {
 		}
 	}
 
-	/**
-	 * @return the attribute ID
-	 */
-	public String getAttributeID() {
+				public String getAttributeID() {
 		return this.attributeID;
 	}
 
-	/**
-	 * @return the parameter value
-	 */
-	public String getValue() {
+				public String getValue() {
 		return this.value;
 	}
 
-	/**
-	 * @return the IAttribute needed to get and set values
-	 * @throws TeamRepositoryException
-	 */
-	public IAttribute getIAttribute() throws TeamRepositoryException {
+					public IAttribute getIAttribute() throws TeamRepositoryException {
 		if (this.theAttribute == null) {
 			this.theAttribute = AttributeUtil.resolveAttribute(
 					this.attributeID, fProjectAreaHandle, fMonitor);
@@ -110,51 +72,27 @@ public class ParameterValue {
 		return this.theAttribute;
 	}
 
-	/**
-	 * @return true if the parameter is provided in default mode
-	 */
-	public boolean isDefault() {
+				public boolean isDefault() {
 		return mode.equals(MODE_DEFAULT);
 	}
 
-	/**
-	 * @return true if the parameter is provided in add mode
-	 */
-	public boolean isAdd() {
+				public boolean isAdd() {
 		return mode.equals(MODE_ADD);
 	}
 
-	/**
-	 * @return true if the parameter is provided in remove mode
-	 */
-	public boolean isRemove() {
+				public boolean isRemove() {
 		return mode.equals(MODE_REMOVE);
 	}
 
-	/**
-	 * @return true if the parameter is provided in set mode
-	 */
-	public boolean isSet() {
+				public boolean isSet() {
 		return mode.equals(MODE_SET);
 	}
 
-	/**
-	 * To override the value to be able to use if for encoded item types
-	 * 
-	 * @param value
-	 */
-	public void setValue(String value) {
+						public void setValue(String value) {
 		this.value = value;
 	}
 
-	/**
-	 * Get the display name. The parameter must be a real attribute to have a
-	 * display name.
-	 * 
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public String getDisplayName() throws TeamRepositoryException {
+								public String getDisplayName() throws TeamRepositoryException {
 		IAttribute attribute = getIAttribute();
 		if (attribute == null) {
 			throw new WorkItemCommandLineException("Attribute not found: "

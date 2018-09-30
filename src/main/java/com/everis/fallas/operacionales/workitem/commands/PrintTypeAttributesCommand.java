@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.commands;
 
 import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
@@ -19,18 +12,10 @@ import com.ibm.team.process.common.IProjectArea;
 import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.workitem.common.model.IWorkItemType;
 
-/**
- * Command to print the attributes of a specific attribute type. I don't need a
- * work item operation here, just login to the repository
- * 
- */
 public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand
 		implements IWorkItemCommand {
 
-	/**
-	 * @param parameterManager
-	 */
-	public PrintTypeAttributesCommand(ParameterManager parameterManager) {
+				public PrintTypeAttributesCommand(ParameterManager parameterManager) {
 		super(parameterManager);
 	}
 
@@ -39,15 +24,7 @@ public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand
 		return IWorkItemCommandLineConstants.COMMAND_PRINT_TYPE_ATTRIBUTES;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.ibm.js.team.workitem.commandline.framework.AbstractWorkItemCommand
-	 * #setRequiredParameters()
-	 */
-	public void setRequiredParameters() {
-		// Add the parameters required to perform the operation
+								public void setRequiredParameters() {
 		super.setRequiredParameters();
 		getParameterManager()
 				.syntaxAddRequiredParameter(
@@ -59,17 +36,8 @@ public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand
 						IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY_EXAMPLE);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.ibm.js.team.workitem.commandline.framework.AbstractWorkItemCommand
-	 * #process()
-	 */
-	@Override
+								@Override
 	public OperationResult process() throws TeamRepositoryException {
-		// Get the parameters such as project area name and Attribute Type and
-		// run the operation
 		String projectAreaName = getParameterManager()
 				.consumeParameter(
 						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY)
@@ -95,16 +63,7 @@ public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand
 		return getResult();
 	}
 
-	/**
-	 * Print the attributes associated to a work item type and display their
-	 * detailed information
-	 * 
-	 * @param projectArea
-	 * @param workItemType
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private OperationResult printTypeAttributes(IProjectArea projectArea,
+										private OperationResult printTypeAttributes(IProjectArea projectArea,
 			IWorkItemType workItemType) throws TeamRepositoryException {
 
 		WorkItemTypeHelper workItemTypeHelper = new WorkItemTypeHelper(

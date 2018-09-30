@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.utils;
 
 import java.util.ArrayList;
@@ -31,26 +24,9 @@ import com.ibm.team.workitem.common.query.IQueryResult;
 import com.ibm.team.workitem.common.query.IResult;
 import com.ibm.team.workitem.common.query.QueryTypes;
 
-/**
- * Utility Class to find IQueryDescriptors for - Personal Queries - Shared
- * queries
- * 
- * And Utility Class to get results from queries
- * 
- */
 public class QueryUtil {
 
-	/**
-	 * Find users personal query by name
-	 * 
-	 * @param queryName
-	 * @param projectArea
-	 * @param userHandle
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IQueryDescriptor findPersonalQuery(String queryName,
+											public static IQueryDescriptor findPersonalQuery(String queryName,
 			IProjectArea projectArea, IContributorHandle userHandle,
 			IProgressMonitor monitor) throws TeamRepositoryException {
 		if (null == projectArea) {
@@ -65,17 +41,7 @@ public class QueryUtil {
 		return findQuery(queryName, queries);
 	}
 
-	/**
-	 * Find shared query by name
-	 * 
-	 * @param queryName
-	 * @param projectArea
-	 * @param sharingTargets
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IQueryDescriptor findSharedQuery(String queryName,
+											public static IQueryDescriptor findSharedQuery(String queryName,
 			IProjectArea projectArea, List<IAuditableHandle> sharingTargets,
 			IProgressMonitor monitor) throws TeamRepositoryException {
 		IQueryClient queryClient = getWorkItemClient(projectArea)
@@ -87,15 +53,7 @@ public class QueryUtil {
 		return findQuery(queryName, queries);
 	}
 
-	/**
-	 * Find query with matching name from list
-	 * 
-	 * @param queryName
-	 * @param queries
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private static IQueryDescriptor findQuery(String queryName,
+									private static IQueryDescriptor findQuery(String queryName,
 			List<IQueryDescriptor> queries) throws TeamRepositoryException {
 		for (Iterator<IQueryDescriptor> iterator = queries.iterator(); iterator
 				.hasNext();) {
@@ -108,27 +66,13 @@ public class QueryUtil {
 		return null;
 	}
 
-	/**
-	 * Get the workItemClient
-	 * 
-	 * @param projectArea
-	 * @return
-	 */
-	private static IWorkItemClient getWorkItemClient(
+							private static IWorkItemClient getWorkItemClient(
 			IProjectAreaHandle projectArea) {
 		return (IWorkItemClient) ((ITeamRepository) projectArea.getOrigin())
 				.getClientLibrary(IWorkItemClient.class);
 	}
 
-	/**
-	 * Get the query result
-	 * 
-	 * @param query
-	 * @param overrideResultLimit
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IQueryResult<IResult> getUnresolvedQueryResult(
+									public static IQueryResult<IResult> getUnresolvedQueryResult(
 			IQueryDescriptor query, boolean overrideResultLimit)
 			throws TeamRepositoryException {
 		if (query == null) {
@@ -143,14 +87,7 @@ public class QueryUtil {
 		return results;
 	}
 
-	/**
-	 * Find the sharing targets to find the query
-	 * 
-	 * @param sharingTargetNames
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static List<IAuditableHandle> findSharingTargets(
+								public static List<IAuditableHandle> findSharingTargets(
 			String sharingTargetNames,
 			IProcessClientService processClientService, IProgressMonitor monitor)
 			throws TeamRepositoryException {

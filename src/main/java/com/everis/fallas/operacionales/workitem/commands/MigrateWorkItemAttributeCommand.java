@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 20015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.commands;
 
 import java.util.ArrayList;
@@ -45,12 +38,6 @@ import com.ibm.team.workitem.common.model.ItemProfile;
 import com.ibm.team.workitem.common.query.IQueryResult;
 import com.ibm.team.workitem.common.query.IResult;
 
-/**
- * Command to migrate a work item with a work item attribute of type string that
- * contains a list of enumeration literal as used up to RTC 3.x to the itemLists
- * available in RTC 4.x
- * 
- */
 public class MigrateWorkItemAttributeCommand extends
 		AbstractTeamRepositoryCommand {
 
@@ -76,17 +63,9 @@ public class MigrateWorkItemAttributeCommand extends
 		super(parametermanager);
 	}
 
-	/***
-	 * Add required parameters
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see com.everis.fallas.operacionales.workitem.framework.AbstractTeamRepositoryCommand#setRequiredParameters()
-	 */
-	@Override
+								@Override
 	public void setRequiredParameters() {
 		super.setRequiredParameters();
-		// Copied from CreateWorkItemCommand
 		getParameterManager()
 				.syntaxAddRequiredParameter(
 						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY,
@@ -105,35 +84,17 @@ public class MigrateWorkItemAttributeCommand extends
 				PARAMETER_TARGET_ATTRIBUTE_ID_EXAMPLE);
 	}
 
-	/***
-	 * Return the command
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see com.everis.fallas.operacionales.workitem.framework.IWorkItemCommand#getCommandName()
-	 */
-	@Override
+								@Override
 	public String getCommandName() {
 		return COMMAND_MIGRATE_ENUMERATION_LIST_ATTRIBUTE;
 	}
 
-	/***
-	 * Perform the command
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see com.everis.fallas.operacionales.workitem.framework.AbstractCommand#process()
-	 */
-	@Override
+								@Override
 	public OperationResult process() throws TeamRepositoryException {
-		// From CreateWorkItemCommand
-		// Get the parameters such as project area name and Attribute Type and
-		// run the operation
 		String projectAreaName = getParameterManager()
 				.consumeParameter(
 						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY)
 				.trim();
-		// Find the project area
 		IProjectArea projectArea = ProcessAreaUtil.findProjectAreaByFQN(
 				projectAreaName, getProcessClientService(), getMonitor());
 		if (projectArea == null) {
@@ -144,15 +105,12 @@ public class MigrateWorkItemAttributeCommand extends
 		String workItemTypeID = getParameterManager().consumeParameter(
 				IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY)
 				.trim();
-		// Find the work item type
 		IWorkItemType workItemType = WorkItemTypeHelper.findWorkItemType(
 				workItemTypeID, projectArea.getProjectArea(),
 				getWorkItemCommon(), getMonitor());
 
-		// Get the parameter values - The source attribute
 		String sourceAttributeID = getParameterManager().consumeParameter(
 				PARAMETER_SOURCE_ATTRIBUTE_ID).trim();
-		// check if old attribute ID is string type
 		IAttribute sourceIAttribute = getWorkItemCommon().findAttribute(
 				projectArea, sourceAttributeID, getMonitor());
 		if (sourceIAttribute == null) {
@@ -166,10 +124,8 @@ public class MigrateWorkItemAttributeCommand extends
 							+ sourceAttributeID);
 		}
 
-		// Get the parameter values - The target attribute
 		String targetAttributeID = getParameterManager().consumeParameter(
 				PARAMETER_TARGET_ATTRIBUTE_ID).trim();
-		// check if new attribute ID is EnumerationList
 		IAttribute targetIAttribute = getWorkItemCommon().findAttribute(
 				projectArea, targetAttributeID, getMonitor());
 		if (targetIAttribute == null) {
@@ -199,24 +155,14 @@ public class MigrateWorkItemAttributeCommand extends
 			}
 			migrateSingleWorkItem(wi, sourceIAttribute, targetIAttribute);
 		} else {
-			// Update all work items of this type.
 			migrateAllWorkItems(projectArea, workItemType, sourceIAttribute,
 					targetIAttribute);
 		}
-		// If we got here, we succeeded
 		getResult().setSuccess();
 		return getResult();
 	}
 
-	/**
-	 * Migrate one specific work item - for testing
-	 * 
-	 * @param wi
-	 * @param sourceIAttribute
-	 * @param targetIAttribute
-	 * @throws TeamRepositoryException
-	 */
-	private void migrateSingleWorkItem(IWorkItem wi,
+									private void migrateSingleWorkItem(IWorkItem wi,
 			IAttribute sourceIAttribute, IAttribute targetIAttribute)
 			throws TeamRepositoryException {
 		MigrateWorkItem operation = new MigrateWorkItem("Migrate",
@@ -224,20 +170,9 @@ public class MigrateWorkItemAttributeCommand extends
 		performMigration((IWorkItemHandle) wi.getItemHandle(), operation);
 	}
 
-	/**
-	 * Migrate all work items of a specific type in a project area
-	 * 
-	 * @param projectArea
-	 * @param workItemType
-	 * @param sourceIAttribute
-	 * @param targetIAttribute
-	 * @throws TeamRepositoryException
-	 */
-	private void migrateAllWorkItems(IProjectArea projectArea,
+										private void migrateAllWorkItems(IProjectArea projectArea,
 			IWorkItemType workItemType, IAttribute sourceIAttribute,
 			IAttribute targetIAttribute) throws TeamRepositoryException {
-		// Find all work items of this type.
-		// Create an Expression to find them
 		IQueryableAttribute attribute = QueryableAttributes.getFactory(
 				IWorkItem.ITEM_TYPE).findAttribute(projectArea,
 				IWorkItem.PROJECT_AREA_PROPERTY, getAuditableCommon(),
@@ -253,30 +188,19 @@ public class MigrateWorkItemAttributeCommand extends
 		typeinProjectArea.add(inProjectArea);
 		typeinProjectArea.add(isType);
 
-		// Run the Expression
 		IQueryClient queryClient = getWorkItemClient().getQueryClient();
 		IQueryResult<IResult> results = queryClient.getExpressionResults(
 				projectArea, typeinProjectArea);
-		// Override the result set limit so that we get more than 1000 items if
-		// there are more
 		results.setLimit(Integer.MAX_VALUE);
 		MigrateWorkItem operation = new MigrateWorkItem("Migrate",
 				IWorkItem.FULL_PROFILE, sourceIAttribute, targetIAttribute);
-		// Run the operation for each result
 		while (results.hasNext(getMonitor())) {
 			IResult result = (IResult) results.next(getMonitor());
 			performMigration((IWorkItemHandle) result.getItem(), operation);
 		}
 	}
 
-	/**
-	 * Perform the update and handle errors
-	 * 
-	 * @param handle
-	 * @param operation
-	 * @throws WorkItemCommandLineException
-	 */
-	private void performMigration(IWorkItemHandle handle,
+								private void performMigration(IWorkItemHandle handle,
 			MigrateWorkItem operation) throws WorkItemCommandLineException {
 		String workItemID = "undefined";
 		try {
@@ -305,61 +229,28 @@ public class MigrateWorkItemAttributeCommand extends
 		}
 	}
 
-	/**
-	 * We need this client libraries to run queries
-	 * 
-	 * @return
-	 */
-	private IWorkItemClient getWorkItemClient() {
+						private IWorkItemClient getWorkItemClient() {
 		return (IWorkItemClient) getTeamRepository().getClientLibrary(
 				IWorkItemClient.class);
 	}
 
-	/**
-	 * Get the work item ID as string
-	 * 
-	 * @param workItem
-	 * @return
-	 */
-	private String getWorkItemIDString(IWorkItem workItem) {
+							private String getWorkItemIDString(IWorkItem workItem) {
 		return new Integer(workItem.getId()).toString();
 	}
 
-	/**
-	 * The @see com.ibm.team.workitem.client.WorkItemOperation that is used to
-	 * perform the modifications.
-	 * 
-	 */
-	private class MigrateWorkItem extends WorkItemOperation {
+						private class MigrateWorkItem extends WorkItemOperation {
 
 		IAttribute fsourceAttribute = null;
 		IAttribute fTargetAttribute = null;
 
-		/**
-		 * Constructor
-		 * 
-		 * @param The
-		 *            title message for the operation
-		 * @param message
-		 * @param profile
-		 * @param sourceAttribute
-		 * @param targetAttribute
-		 */
-		public MigrateWorkItem(String message, ItemProfile<?> profile,
+																						public MigrateWorkItem(String message, ItemProfile<?> profile,
 				IAttribute sourceAttribute, IAttribute targetAttribute) {
 			super(message, profile);
 			fsourceAttribute = sourceAttribute;
 			fTargetAttribute = targetAttribute;
 		}
 
-		/***
-		 * This gets called if run() is called
-		 * 
-		 * @see com.ibm.team.workitem.client.WorkItemOperation#execute(com.ibm.team
-		 *      .workitem.client.WorkItemWorkingCopy,
-		 *      org.eclipse.core.runtime.IProgressMonitor)
-		 */
-		@Override
+																@Override
 		protected void execute(WorkItemWorkingCopy workingCopy,
 				IProgressMonitor monitor) throws TeamRepositoryException,
 				RuntimeException {
@@ -380,9 +271,7 @@ public class MigrateWorkItemAttributeCommand extends
 								+ " Target Attribute not available - Synchronize Attributes: "
 								+ fTargetAttribute.getIdentifier());
 			}
-			// get the old value - a string with literals separated by a comma
 			Object ovalue = workItem.getValue(fsourceAttribute);
-			// compute the result values
 			String sourceValues = "";
 			if (null != ovalue && ovalue instanceof String) {
 				sourceValues = (String) ovalue;
@@ -396,7 +285,6 @@ public class MigrateWorkItemAttributeCommand extends
 				List<Object> results = new ArrayList<Object>();
 				for (String literalID : values) {
 					if (literalID == "") {
-						// Nothing to do
 						continue;
 					}
 					Identifier<? extends ILiteral> literal = getLiteralEqualsIDString(
@@ -410,24 +298,12 @@ public class MigrateWorkItemAttributeCommand extends
 					}
 					results.add(literal);
 				}
-				// Set the value
 				workItem.setValue(fTargetAttribute, results);
 			}
 			getResult().appendResultString("Migrated work item " + thisItemID);
 		}
 
-		/**
-		 * Gets an enumeration literal for an attribute that has the specific
-		 * literal ID.
-		 * 
-		 * @param enumeration
-		 *            - the enumeration to look for
-		 * @param literalIDString
-		 *            - the literal ID name to look for
-		 * @return the literal or null
-		 * @throws TeamRepositoryException
-		 */
-		private Identifier<? extends ILiteral> getLiteralEqualsIDString(
+																								private Identifier<? extends ILiteral> getLiteralEqualsIDString(
 				final IEnumeration<? extends ILiteral> enumeration,
 				String literalIDString) throws TeamRepositoryException {
 			List<? extends ILiteral> literals = enumeration

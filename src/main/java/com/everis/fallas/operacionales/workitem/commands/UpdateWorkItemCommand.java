@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.commands;
 
 import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
@@ -19,18 +12,9 @@ import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.workitem.common.model.IWorkItem;
 import com.ibm.team.workitem.common.model.IWorkItemType;
 
-/**
- * Command to update a work item, set the provided values and save it. The
- * operation is governed by the process and might fail if required parameters
- * are missing.
- * 
- */
 public class UpdateWorkItemCommand extends AbstractWorkItemModificationCommand {
 
-	/**
-	 * @param parametermanager
-	 */
-	public UpdateWorkItemCommand(ParameterManager parametermanager) {
+				public UpdateWorkItemCommand(ParameterManager parametermanager) {
 		super(parametermanager);
 	}
 
@@ -39,16 +23,8 @@ public class UpdateWorkItemCommand extends AbstractWorkItemModificationCommand {
 		return IWorkItemCommandLineConstants.COMMAND_UPDATE;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.ibm.js.team.workitem.commandline.framework.AbstractWorkItemCommand
-	 * #setRequiredParameters()
-	 */
-	public void setRequiredParameters() {
+								public void setRequiredParameters() {
 		super.setRequiredParameters();
-		// Add the parameters required to perform the operation
 		getParameterManager()
 				.syntaxAddRequiredParameter(
 						IWorkItemCommandLineConstants.PARAMETER_WORKITEM_ID_PROPERTY,
@@ -63,16 +39,8 @@ public class UpdateWorkItemCommand extends AbstractWorkItemModificationCommand {
 				IWorkItemCommandLineConstants.SWITCH_ENFORCE_SIZE_LIMITS);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.ibm.js.team.workitem.commandline.framework.AbstractWorkItemCommand
-	 * #process()
-	 */
-	@Override
+								@Override
 	public OperationResult process() throws TeamRepositoryException {
-		// Get the parameters such as the work item ID and run the operation
 		String wiID = getParameterManager().consumeParameter(
 				IWorkItemCommandLineConstants.PARAMETER_WORKITEM_ID_PROPERTY);
 		IWorkItem workItem = WorkItemUtil.findWorkItemByID(wiID,
@@ -81,19 +49,11 @@ public class UpdateWorkItemCommand extends AbstractWorkItemModificationCommand {
 			throw new WorkItemCommandLineException(
 					"Work item cannot be found ID: " + wiID);
 		}
-		// Update the work item
 		updateWorkItem(workItem);
 		return this.getResult();
 	}
 
-	/**
-	 * Run the update work item operation
-	 * 
-	 * @param workItem
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private boolean updateWorkItem(IWorkItem workItem)
+								private boolean updateWorkItem(IWorkItem workItem)
 			throws TeamRepositoryException {
 		this.setIgnoreErrors(getParameterManager().hasSwitch(
 				IWorkItemCommandLineConstants.SWITCH_IGNOREERRORS));
@@ -110,7 +70,6 @@ public class UpdateWorkItemCommand extends AbstractWorkItemModificationCommand {
 								workItem.getProjectArea(), getWorkItemCommon(),
 								getMonitor());
 				if (newType == null) {
-					// If we have no type we can't create the work item
 					throw new WorkItemCommandLineException("Work item type "
 							+ workItemTypeID + " not found in project area. ");
 				}

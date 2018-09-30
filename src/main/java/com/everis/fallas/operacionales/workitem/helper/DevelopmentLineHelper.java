@@ -36,17 +36,7 @@ public class DevelopmentLineHelper {
 		fMonitor = monitor;
 	}
 
-	/**
-	 * Find a development line based on the path provided.
-	 * 
-	 * @param projectArea
-	 * @param path
-	 * @param byId
-	 *            search by id or name
-	 * @return a development line found or null.
-	 * @throws TeamRepositoryException
-	 */
-	public IDevelopmentLine findDevelopmentLine(IProjectArea projectArea,
+											public IDevelopmentLine findDevelopmentLine(IProjectArea projectArea,
 			List<String> path, Mode comparemode) throws TeamRepositoryException {
 		int level = 0;
 		String fookFor = path.get(level);
@@ -75,17 +65,7 @@ public class DevelopmentLineHelper {
 		return null;
 	}
 
-	/**
-	 * Find an iteration based on the path provided.
-	 * 
-	 * @param iProjectAreaHandle
-	 * @param path
-	 * @param byId
-	 * @return an iteration if one can be found or null otherwise
-	 * 
-	 * @throws TeamRepositoryException
-	 */
-	public IIteration findIteration(IProjectAreaHandle iProjectAreaHandle,
+											public IIteration findIteration(IProjectAreaHandle iProjectAreaHandle,
 			List<String> path, Mode comparemode) throws TeamRepositoryException {
 		fAuditableClient = (IAuditableClient) fTeamRepository
 				.getClientLibrary(IAuditableClient.class);
@@ -101,17 +81,7 @@ public class DevelopmentLineHelper {
 		return foundIteration;
 	}
 
-	/**
-	 * Find an Iteration
-	 * 
-	 * @param iterations
-	 * @param path
-	 * @param level
-	 * @param comparemode
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private IIteration findIteration(IIterationHandle[] iterations,
+											private IIteration findIteration(IIterationHandle[] iterations,
 			List<String> path, int level, Mode comparemode)
 			throws TeamRepositoryException {
 		String lookFor = path.get(level);
@@ -146,14 +116,7 @@ public class DevelopmentLineHelper {
 		return null;
 	}
 
-	/**
-	 * Get the IIteration object from a handle
-	 * 
-	 * @param handle
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public IIteration resolveIteration(IIterationHandle handle)
+								public IIteration resolveIteration(IIterationHandle handle)
 			throws TeamRepositoryException {
 		if (handle instanceof IIteration) {
 			return (IIteration) handle;
@@ -164,14 +127,7 @@ public class DevelopmentLineHelper {
 		return iteration;
 	}
 
-	/**
-	 * Get the IDevelopmentLine object from a handle
-	 * 
-	 * @param handle
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public IDevelopmentLine resolveDevelopmentLine(IDevelopmentLineHandle handle)
+								public IDevelopmentLine resolveDevelopmentLine(IDevelopmentLineHandle handle)
 			throws TeamRepositoryException {
 		if (handle instanceof IDevelopmentLine) {
 			return (IDevelopmentLine) handle;
@@ -182,15 +138,7 @@ public class DevelopmentLineHelper {
 		return devLine;
 	}
 
-	/**
-	 * Get the development line as string (Label, id or name)
-	 * 
-	 * @param handle
-	 * @param mode
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public String getDevelopmentLineAsString(IDevelopmentLineHandle handle,
+									public String getDevelopmentLineAsString(IDevelopmentLineHandle handle,
 			Mode mode) throws TeamRepositoryException {
 		IDevelopmentLine devLine = resolveDevelopmentLine(handle);
 		switch (mode) {
@@ -204,17 +152,7 @@ public class DevelopmentLineHelper {
 		return devLine.getLabel();
 	}
 
-	/**
-	 * Get the iteration as string (Label, id or name). The mode chosen
-	 * determines what value is returned. This returns only the iteration
-	 * related data and not the path from the development line to the iteration.
-	 * 
-	 * @param handle
-	 * @param mode
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public String getIterationAsString(IIterationHandle handle, Mode mode)
+											public String getIterationAsString(IIterationHandle handle, Mode mode)
 			throws TeamRepositoryException {
 		IIteration iteration = resolveIteration(handle);
 		switch (mode) {
@@ -228,16 +166,7 @@ public class DevelopmentLineHelper {
 		return iteration.getLabel();
 	}
 
-	/**
-	 * Get the iteration as full path string (Label, id or name) This includes
-	 * the development line and all the iterations above.
-	 * 
-	 * @param handle
-	 * @param mode
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public String getIterationAsFullPath(IIterationHandle handle, Mode mode)
+										public String getIterationAsFullPath(IIterationHandle handle, Mode mode)
 			throws TeamRepositoryException {
 		IIteration iteration = resolveIteration(handle);
 		String fullPath = getIterationAsString(iteration, mode);

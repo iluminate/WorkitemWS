@@ -1,110 +1,46 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 2015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.parameter;
 
 import com.everis.fallas.operacionales.workitem.common.IWorkItemCommandLineConstants;
 import com.everis.fallas.operacionales.workitem.framework.WorkItemCommandLineException;
 
-/**
- * Tool to manage parameters for a command line. It gets passed a parameterlist
- * that has been parsed and provides access to their values. It allows to build
- * up a list of required parameters with syntax hints.
- * 
- */
 public class ParameterManager {
 
-	// The required parameters
 	private ParameterList fRequiredParameters = new ParameterList();
-	// the parsed parameters
 	private ParameterList fParsedParameters = null;
 
-	/**
-	 * Constructor for the ParameterManager. Pass a parameter list parsed from
-	 * the input arguments.
-	 * 
-	 * @param arguments
-	 */
-	public ParameterManager(ParameterList arguments) {
+							public ParameterManager(ParameterList arguments) {
 		super();
 		this.fParsedParameters = arguments;
 	}
 
-	/**
-	 * @return the required parameters
-	 */
-	private ParameterList getRequiredParameters() {
+				private ParameterList getRequiredParameters() {
 		return fRequiredParameters;
 	}
 
-	/**
-	 * Delegate to create a required parameter
-	 * 
-	 * @param name
-	 *            - Name of the parameter
-	 * @param example
-	 *            - An example for the parameter usage
-	 */
-	public void syntaxAddRequiredParameter(String name, String example) {
+									public void syntaxAddRequiredParameter(String name, String example) {
 		getRequiredParameters().addParameter(
 				Parameter.createRequiredParameter(name, example));
 	}
 
-	/**
-	 * Add a supported switch
-	 * 
-	 * @param name
-	 *            name of the switch
-	 */
-	public void syntaxAddSwitch(String name, String value) {
+							public void syntaxAddSwitch(String name, String value) {
 		getRequiredParameters().addParameter(
 				Parameter.createSwitch(name, value));
 	}
 
-	/**
-	 * Add a supported switch
-	 * 
-	 * @param name
-	 *            name of the switch
-	 */
-	public void syntaxAddSwitch(String name) {
+							public void syntaxAddSwitch(String name) {
 		getRequiredParameters()
 				.addParameter(Parameter.createSwitch(name, null));
 	}
 
-	/**
-	 * Delegate to search for a switch
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public boolean hasSwitch(String name) {
+							public boolean hasSwitch(String name) {
 		return fParsedParameters.hasSwitch(name);
 	}
 
-	/**
-	 * Delegate to find a parameter, return the value and to mark the parameter
-	 * as consumed
-	 * 
-	 * @param name
-	 *            - name of the parameter
-	 * 
-	 * @return the value of the parameter or null
-	 */
-	public String consumeParameter(String name) {
+										public String consumeParameter(String name) {
 		return fParsedParameters.consumeParameter(name);
 	}
 
-	/**
-	 * Get the name of the command from the arguments
-	 * 
-	 * @return the name (may be "") or null, if no command was provided
-	 */
-	public String getCommand() {
+						public String getCommand() {
 		Parameter command = fParsedParameters.getCommand();
 		if (command == null) {
 			return null;
@@ -112,23 +48,11 @@ public class ParameterManager {
 		return command.getName();
 	}
 
-	/**
-	 * Provide the argument list
-	 * 
-	 * @return the Parameters
-	 */
-	public ParameterList getArguments() {
+						public ParameterList getArguments() {
 		return fParsedParameters;
 	}
 
-	/**
-	 * Validate if all the parameters required are available. If not throw an
-	 * exception with a list of missing parameters.
-	 * 
-	 * @throws WorkItemCommandLineException
-	 *             with a description of what is missing
-	 */
-	public void validateRequiredParameters()
+								public void validateRequiredParameters()
 			throws WorkItemCommandLineException {
 		ParameterList missingParameters = new ParameterList();
 		ParameterList required = getRequiredParameters();
@@ -148,26 +72,11 @@ public class ParameterManager {
 		}
 	}
 
-	/**
-	 * Create a usage string with the required parameters
-	 * 
-	 * @return a string with a usage description
-	 */
-	public String helpUsageRequiredParameters() {
+						public String helpUsageRequiredParameters() {
 		return getParameterHelp(fRequiredParameters, false);
 	}
 
-	/**
-	 * Create a help test for a given parameter list
-	 * 
-	 * @param parameters
-	 *            - the parameters to be printed
-	 * @param detailled
-	 *            - if true, the parameters come in one line each and have an
-	 *            example provided.
-	 * @return a string with help info
-	 */
-	private String getParameterHelp(ParameterList parameters, boolean detailled) {
+											private String getParameterHelp(ParameterList parameters, boolean detailled) {
 		String separator = detailled ? "\n" : " ";
 		String linePrefix = detailled ? "\t Required: " : "";
 		String missing = "";

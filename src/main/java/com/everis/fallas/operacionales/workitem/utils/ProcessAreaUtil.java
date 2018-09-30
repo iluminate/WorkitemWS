@@ -1,10 +1,3 @@
-/*******************************************************************************
- * Licensed Materials - Property of IBM
- * (c) Copyright IBM Corporation 20015. All Rights Reserved. 
- *
- * Note to U.S. Government Users Restricted Rights:  Use, duplication or 
- * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
- *******************************************************************************/
 package com.everis.fallas.operacionales.workitem.utils;
 
 import java.net.URI;
@@ -25,26 +18,11 @@ import com.ibm.team.repository.common.IItemHandle;
 import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.repository.common.UUID;
 
-/**
- * Class to find process areas
- * 
- */
 public class ProcessAreaUtil {
 
 	public static final String PATH_SEPARATOR = "/";
 
-	/**
-	 * Find a ProcessArea by fully qualified name The name has to be a fully
-	 * qualified name with the full path e.g.
-	 * "JKE Banking(Change Management)/Business Recovery Matters"
-	 * 
-	 * @param name
-	 * @param processClient
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IProcessArea findProcessAreaByFQN(String name,
+												public static IProcessArea findProcessAreaByFQN(String name,
 			IProcessClientService processClient, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		URI uri = getURIFromName(name);
@@ -52,18 +30,7 @@ public class ProcessAreaUtil {
 				IProcessItemService.ALL_PROPERTIES, monitor);
 	}
 
-	/**
-	 * Find a ProjectArea by fully qualified name The name has to be a fully
-	 * qualified name with the full path e.g.
-	 * "JKE Banking(Change Management)/Business Recovery Matters"
-	 * 
-	 * @param name
-	 * @param processClient
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IProjectArea findProjectAreaByFQN(String name,
+												public static IProjectArea findProjectAreaByFQN(String name,
 			IProcessClientService processClient, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		IProcessArea processArea = findProcessAreaByFQN(name, processClient,
@@ -74,18 +41,7 @@ public class ProcessAreaUtil {
 		return null;
 	}
 
-	/**
-	 * Find a TeamArea by fully qualified name The name has to be a fully
-	 * qualified name with the full path e.g.
-	 * "JKE Banking(Change Management)/Business Recovery Matters"
-	 * 
-	 * @param name
-	 * @param processClient
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static ITeamArea findTeamAreaByFQN(String name,
+												public static ITeamArea findTeamAreaByFQN(String name,
 			IProcessClientService processClient, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		IProcessArea processArea = findProcessAreaByFQN(name, processClient,
@@ -96,16 +52,7 @@ public class ProcessAreaUtil {
 		return null;
 	}
 
-	/**
-	 * Get the project area from a UUID
-	 * 
-	 * @param uuid
-	 * @param teamRepositroy
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IProjectArea getProjectAreaFormUUID(UUID uuid,
+										public static IProjectArea getProjectAreaFormUUID(UUID uuid,
 			ITeamRepository teamRepositroy, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		IItemHandle handle = null;
@@ -116,16 +63,7 @@ public class ProcessAreaUtil {
 		return area;
 	}
 
-	/**
-	 * Get the project area from a UUID
-	 * 
-	 * @param uuid
-	 * @param teamRepositroy
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static ITeamArea getTeamAreaFormUUID(UUID uuid,
+										public static ITeamArea getTeamAreaFormUUID(UUID uuid,
 			ITeamRepository teamRepositroy, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		IItemHandle handle = null;
@@ -136,109 +74,52 @@ public class ProcessAreaUtil {
 		return area;
 	}
 
-	/**
-	 * URI conversion to be able to find from a URI
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static URI getURIFromName(String name) {
+							public static URI getURIFromName(String name) {
 		URI uri = URI.create(name.replaceAll(" ", "%20"));
 		return uri;
 	}
 
-	/**
-	 * URI conversion to be able to get a name from a URI
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static URI getNameFromURI(String name) {
+							public static URI getNameFromURI(String name) {
 		URI uri = URI.create(name.replaceAll("%20", " "));
 		return uri;
 	}
 
-	/**
-	 * Resolve a ProcessArea
-	 * 
-	 * @param handle
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IProcessArea resolveProcessArea(IProcessAreaHandle handle,
+									public static IProcessArea resolveProcessArea(IProcessAreaHandle handle,
 			IProgressMonitor monitor) throws TeamRepositoryException {
-		// To avoid having to resolve if it already resolved
 		if (handle instanceof IProcessArea) {
 			return (IProcessArea) handle;
 		}
-		// Resolve handle
 		return (IProcessArea) ((ITeamRepository) handle.getOrigin())
 				.itemManager().fetchCompleteItem(handle, IItemManager.DEFAULT,
 						monitor);
 	}
 
-	/**
-	 * Resolve a Team Area
-	 * 
-	 * @param handle
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static ITeamArea resolveTeamArea(IProcessAreaHandle handle,
+									public static ITeamArea resolveTeamArea(IProcessAreaHandle handle,
 			IProgressMonitor monitor) throws TeamRepositoryException {
-		// To avoid having to resolve if it already resolved
 		if (handle instanceof ITeamArea) {
 			return (ITeamArea) handle;
 		}
-		// Resolve handle
 		return (ITeamArea) ((ITeamRepository) handle.getOrigin()).itemManager()
 				.fetchCompleteItem(handle, IItemManager.DEFAULT, monitor);
 	}
 
-	/**
-	 * Resolve a Project Area
-	 * 
-	 * @param handle
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static IProjectArea resolveProjectArea(IProcessAreaHandle handle,
+									public static IProjectArea resolveProjectArea(IProcessAreaHandle handle,
 			IProgressMonitor monitor) throws TeamRepositoryException {
-		// To avoid having to resolve if it already resolved
 		if (handle instanceof IProjectArea) {
 			return (IProjectArea) handle;
 		}
-		// Resolve handle
 		return (IProjectArea) ((ITeamRepository) handle.getOrigin())
 				.itemManager().fetchCompleteItem(handle, IItemManager.DEFAULT,
 						monitor);
 	}
 
-	/**
-	 * Get the name of the process area.
-	 * 
-	 * @param handle
-	 * @param iProcessClientService
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static String getName(IProcessAreaHandle handle,
+										public static String getName(IProcessAreaHandle handle,
 			IProgressMonitor monitor) throws TeamRepositoryException {
 		IProcessArea area = resolveProcessArea(handle, monitor);
 		return area.getName();
 	}
 
-	/**
-	 * @param handle
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	public static String getFullQualifiedName(IProcessAreaHandle handle,
+							public static String getFullQualifiedName(IProcessAreaHandle handle,
 			IProgressMonitor monitor) throws TeamRepositoryException {
 
 		IProcessArea area = resolveProcessArea(handle, monitor);
@@ -256,14 +137,7 @@ public class ProcessAreaUtil {
 		return "";
 	}
 
-	/**
-	 * @param tArea
-	 * @param teamAreaHierarchy
-	 * @param monitor
-	 * @return
-	 * @throws TeamRepositoryException
-	 */
-	private static String getFullQualifiedName(ITeamArea tArea,
+								private static String getFullQualifiedName(ITeamArea tArea,
 			ITeamAreaHierarchy teamAreaHierarchy, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		ITeamAreaHandle parent = teamAreaHierarchy.getParent(tArea);
