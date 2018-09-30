@@ -35,12 +35,11 @@ public interface IWorkItemCommandLineConstants {
 
 	public static final String PARAMETER_WORKITEM_TYPE_PROPERTY = "workItemType";
 	public static final String PARAMETER_WORKITEM_TYPE_PROPERTY_EXAMPLE = "defect";
-	
+
 	public static final String TIMESTAMP_EXPORT_IMPORT_FORMAT_MMM_D_YYYY_HH_MM_A = "MMM d, yyyy hh:mm a";
-	
+
 	public static final String PARAMETER_TIMESTAMP_ENCODING = "timestampFormat";
 	public static final String PARAMETER_TIMESTAMP_ENCODING_EXAMPLE = "\"TIMESTAMP_EXPORT_IMPORT_FORMAT_MMM_D_YYYY_HH_MM_A\"";
-
 
 	public static final String INFIX_PARAMETER_VALUE_SEPARATOR = "=";
 	public static final String PREFIX_COMMAND = "-";
@@ -51,7 +50,6 @@ public interface IWorkItemCommandLineConstants {
 
 	public static final String SWITCH_RMISERVER = "rmiServer";
 	public static final String SWITCH_RMICLIENT = "rmiClient";
-	
 
 	public static final String HTTP_PROTOCOL_PREFIX = "http";
 
@@ -69,5 +67,4 @@ public interface IWorkItemCommandLineConstants {
 
 	public static final String SWITCH_EXPORT_SUPPRESS_ATTRIBUTE_EXCEPTIONS = "suppressAttributeExceptions";
 
-	
 }

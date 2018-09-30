@@ -24,69 +24,65 @@ public class ColumnHeaderMappingHelper {
 	List<ParameterValue> columns = new ArrayList<ParameterValue>();
 	private String[] fColumns = null;
 
-								public ColumnHeaderMappingHelper(IProjectAreaHandle projectArea,
-			IWorkItemCommon workItemCommon, IProgressMonitor monitor) {
+	public ColumnHeaderMappingHelper(IProjectAreaHandle projectArea, IWorkItemCommon workItemCommon,
+			IProgressMonitor monitor) {
 		super();
 		this.fProjectArea = projectArea;
 		this.fWorkItemCommon = workItemCommon;
 		this.fMonitor = monitor;
 	}
 
-						public List<String> analyzeColumnHeader(boolean getIDs)
+	public List<String> analyzeColumnHeader(boolean getIDs)
 			throws TeamRepositoryException, WorkItemCommandLineException {
 		String[] exportColumns = getColumns();
 
 		if (exportColumns == null) {
-			throw new WorkItemCommandLineException(
-					"Column header can not be null in column ");
+			throw new WorkItemCommandLineException("Column header can not be null in column ");
 		}
 
-		ColumnHeaderAttributeNameMapper nameToIdMapper = new ColumnHeaderAttributeNameMapper(
-				fProjectArea, fWorkItemCommon, fMonitor);
+		ColumnHeaderAttributeNameMapper nameToIdMapper = new ColumnHeaderAttributeNameMapper(fProjectArea,
+				fWorkItemCommon, fMonitor);
 		int size = exportColumns.length;
 		List<String> header = new ArrayList<String>(size);
 
 		for (int i = 0; i < size; i++) {
 			String col = exportColumns[i];
 			if (col == null) {
-				throw new WorkItemCommandLineException(
-						"Column ID can not be null in column " + i);
+				throw new WorkItemCommandLineException("Column ID can not be null in column " + i);
 			}
 			String val = col.trim();
 			String id = nameToIdMapper.getID(val);
 			if (id == null) {
-				throw new WorkItemCommandLineException("Column header " + col
-						+ " ID can not be mapped in column " + i);
+				throw new WorkItemCommandLineException("Column header " + col + " ID can not be mapped in column " + i);
 			}
 			if (getIDs) {
 				header.add(id);
 			} else {
 				header.add(col);
 			}
-			ParameterValue columnParameter = new ParameterValue(id, null,
-					fProjectArea, fMonitor);
+			ParameterValue columnParameter = new ParameterValue(id, null, fProjectArea, fMonitor);
 			addColumnParameter(i, columnParameter);
 		}
 		return header;
 	}
 
-							private void addColumnParameter(int i, ParameterValue columnParameter) {
+	private void addColumnParameter(int i, ParameterValue columnParameter) {
 		getParameters().add(i, columnParameter);
 	}
 
-						public List<ParameterValue> getParameters() {
+	public List<ParameterValue> getParameters() {
 		return this.columns;
 	}
 
-						public void setColumns(String columns) {
+	public void setColumns(String columns) {
 		fColumns = columns.split(SEPARATOR_COLUMNS);
 	}
 
-						public void setColumns(String[] columns) {
+	public void setColumns(String[] columns) {
 		fColumns = columns;
 	}
 
-						public String[] getColumns() {
+	public String[] getColumns() {
 		if (fColumns == null) {
 			fColumns = DEFAULT_COLUMNS.split(SEPARATOR_COLUMNS);
 		}

@@ -24,79 +24,71 @@ public class ParameterValue {
 	public static final String MODE_SET = "set";
 	public static final String MODE_DEFAULT = "default";
 
-								public ParameterValue(String parameter, String value,
-			IProjectAreaHandle projectAreaHandle, IProgressMonitor monitor)
-			throws WorkItemCommandLineException {
+	public ParameterValue(String parameter, String value, IProjectAreaHandle projectAreaHandle,
+			IProgressMonitor monitor) throws WorkItemCommandLineException {
 		analyzeValue(parameter, value, projectAreaHandle, monitor);
 	}
 
-								private void analyzeValue(String parameter, String value,
-			IProjectAreaHandle projectAreaHandle, IProgressMonitor monitor)
-			throws WorkItemCommandLineException {
+	private void analyzeValue(String parameter, String value, IProjectAreaHandle projectAreaHandle,
+			IProgressMonitor monitor) throws WorkItemCommandLineException {
 		fProjectAreaHandle = projectAreaHandle;
 		fMonitor = monitor;
 		if (parameter == null) {
-			throw new WorkItemCommandLineException(
-					"Parameter can not be null: ");
+			throw new WorkItemCommandLineException("Parameter can not be null: ");
 		}
 		this.value = value;
-		List<String> propertyData = StringUtil.splitStringToList(parameter,
-				POSTFIX_PARAMETER_MANIPULATION_MODE);
+		List<String> propertyData = StringUtil.splitStringToList(parameter, POSTFIX_PARAMETER_MANIPULATION_MODE);
 		this.attributeID = ParameterIDMapper.getAlias(propertyData.get(0));
 		if (propertyData.size() == 2) {
 			String foundMode = propertyData.get(1);
-			if (MODE_ADD.equals(foundMode) || MODE_REMOVE.equals(foundMode)
-					|| MODE_SET.equals(foundMode)) {
+			if (MODE_ADD.equals(foundMode) || MODE_REMOVE.equals(foundMode) || MODE_SET.equals(foundMode)) {
 				mode = foundMode;
 			} else {
 				throw new WorkItemCommandLineException(
-						"Parameter update mode not recognizeable: " + parameter
-								+ " Value: " + value);
+						"Parameter update mode not recognizeable: " + parameter + " Value: " + value);
 			}
 		}
 	}
 
-				public String getAttributeID() {
+	public String getAttributeID() {
 		return this.attributeID;
 	}
 
-				public String getValue() {
+	public String getValue() {
 		return this.value;
 	}
 
-					public IAttribute getIAttribute() throws TeamRepositoryException {
+	public IAttribute getIAttribute() throws TeamRepositoryException {
 		if (this.theAttribute == null) {
-			this.theAttribute = AttributeUtil.resolveAttribute(
-					this.attributeID, fProjectAreaHandle, fMonitor);
+			this.theAttribute = AttributeUtil.resolveAttribute(this.attributeID, fProjectAreaHandle, fMonitor);
 		}
 		return this.theAttribute;
 	}
 
-				public boolean isDefault() {
+	public boolean isDefault() {
 		return mode.equals(MODE_DEFAULT);
 	}
 
-				public boolean isAdd() {
+	public boolean isAdd() {
 		return mode.equals(MODE_ADD);
 	}
 
-				public boolean isRemove() {
+	public boolean isRemove() {
 		return mode.equals(MODE_REMOVE);
 	}
 
-				public boolean isSet() {
+	public boolean isSet() {
 		return mode.equals(MODE_SET);
 	}
 
-						public void setValue(String value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
-								public String getDisplayName() throws TeamRepositoryException {
+	public String getDisplayName() throws TeamRepositoryException {
 		IAttribute attribute = getIAttribute();
 		if (attribute == null) {
-			throw new WorkItemCommandLineException("Attribute not found: "
-					+ this.attributeID);
+			throw new WorkItemCommandLineException("Attribute not found: " + this.attributeID);
 		}
 		return getIAttribute().getDisplayName();
 	}

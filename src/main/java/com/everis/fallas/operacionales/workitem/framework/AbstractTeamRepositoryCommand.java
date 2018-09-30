@@ -22,20 +22,15 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 		super(parametermanager);
 	}
 
-										@Override
+	@Override
 	public void setRequiredParameters() {
-		getParameterManager()
-				.syntaxAddRequiredParameter(
-						IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY,
-						IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY_EXAMPLE);
-		getParameterManager()
-				.syntaxAddRequiredParameter(
-						IWorkItemCommandLineConstants.PARAMETER_USER_ID_PROPERTY,
-						IWorkItemCommandLineConstants.PARAMETER_USER_ID_PROPERTY_EXAMPLE);
-		getParameterManager()
-				.syntaxAddRequiredParameter(
-						IWorkItemCommandLineConstants.PARAMETER_PASSWORD_PROPERTY,
-						IWorkItemCommandLineConstants.PARAMETER_PASSWORD_PROPERTY_EXAMPLE);
+		getParameterManager().syntaxAddRequiredParameter(
+				IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY,
+				IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY_EXAMPLE);
+		getParameterManager().syntaxAddRequiredParameter(IWorkItemCommandLineConstants.PARAMETER_USER_ID_PROPERTY,
+				IWorkItemCommandLineConstants.PARAMETER_USER_ID_PROPERTY_EXAMPLE);
+		getParameterManager().syntaxAddRequiredParameter(IWorkItemCommandLineConstants.PARAMETER_PASSWORD_PROPERTY,
+				IWorkItemCommandLineConstants.PARAMETER_PASSWORD_PROPERTY_EXAMPLE);
 	}
 
 	@Override
@@ -48,8 +43,7 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 	}
 
 	@Override
-	public OperationResult execute(IProgressMonitor monitor)
-			throws TeamRepositoryException {
+	public OperationResult execute(IProgressMonitor monitor) throws TeamRepositoryException {
 
 		try {
 			this.fTeamRepository = login();
@@ -64,7 +58,8 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 		} catch (TeamRepositoryException e) {
 			this.appendResultString("TeamRepositoryException: Unable to process!");
 			this.appendResultString("This is often due to a link creation making the target work item invalid. ");
-			this.appendResultString("For example creating a parent chld relationship to a work item that already has a parent.");
+			this.appendResultString(
+					"For example creating a parent chld relationship to a work item that already has a parent.");
 			this.appendResultString(e.getMessage());
 			this.setFailed();
 		}
@@ -75,40 +70,35 @@ public abstract class AbstractTeamRepositoryCommand extends AbstractCommand {
 		return fTeamRepository;
 	}
 
-				protected IProcessClientService getProcessClientService() {
+	protected IProcessClientService getProcessClientService() {
 		IProcessClientService fProcessClient = (IProcessClientService) getTeamRepository()
 				.getClientLibrary(IProcessClientService.class);
 		return fProcessClient;
 	}
 
-				protected IWorkItemCommon getWorkItemCommon() {
-		IWorkItemCommon workItemClient = (IWorkItemCommon) getTeamRepository()
-				.getClientLibrary(IWorkItemCommon.class);
+	protected IWorkItemCommon getWorkItemCommon() {
+		IWorkItemCommon workItemClient = (IWorkItemCommon) getTeamRepository().getClientLibrary(IWorkItemCommon.class);
 		return workItemClient;
 	}
 
-				protected IAuditableCommon getAuditableCommon() {
-		return (IAuditableCommon) getTeamRepository().getClientLibrary(
-				IAuditableCommon.class);
+	protected IAuditableCommon getAuditableCommon() {
+		return (IAuditableCommon) getTeamRepository().getClientLibrary(IAuditableCommon.class);
 	}
 
-								private ITeamRepository login() throws TeamRepositoryException {
+	private ITeamRepository login() throws TeamRepositoryException {
 		String repository = getParameterManager()
-				.consumeParameter(
-						IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY);
-		String user = getParameterManager().consumeParameter(
-				IWorkItemCommandLineConstants.PARAMETER_USER_ID_PROPERTY);
-		String password = getParameterManager().consumeParameter(
-				IWorkItemCommandLineConstants.PARAMETER_PASSWORD_PROPERTY);
+				.consumeParameter(IWorkItemCommandLineConstants.PARAMETER_REPOSITORY_URL_PROPERTY);
+		String user = getParameterManager().consumeParameter(IWorkItemCommandLineConstants.PARAMETER_USER_ID_PROPERTY);
+		String password = getParameterManager()
+				.consumeParameter(IWorkItemCommandLineConstants.PARAMETER_PASSWORD_PROPERTY);
 
-		ITeamRepository teamRepository = TeamPlatform
-				.getTeamRepositoryService().getTeamRepository(repository);
+		ITeamRepository teamRepository = TeamPlatform.getTeamRepositoryService().getTeamRepository(repository);
 		teamRepository.registerLoginHandler(new LoginHandler(user, password));
 		teamRepository.login(getMonitor());
 		return teamRepository;
 	}
 
-					private static class LoginHandler implements ILoginHandler, ILoginInfo {
+	private static class LoginHandler implements ILoginHandler, ILoginInfo {
 
 		private String fUserId;
 		private String fPassword;

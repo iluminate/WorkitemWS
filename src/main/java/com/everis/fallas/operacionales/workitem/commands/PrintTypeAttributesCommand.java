@@ -12,10 +12,9 @@ import com.ibm.team.process.common.IProjectArea;
 import com.ibm.team.repository.common.TeamRepositoryException;
 import com.ibm.team.workitem.common.model.IWorkItemType;
 
-public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand
-		implements IWorkItemCommand {
+public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand implements IWorkItemCommand {
 
-				public PrintTypeAttributesCommand(ParameterManager parameterManager) {
+	public PrintTypeAttributesCommand(ParameterManager parameterManager) {
 		super(parameterManager);
 	}
 
@@ -24,53 +23,42 @@ public class PrintTypeAttributesCommand extends AbstractTeamRepositoryCommand
 		return IWorkItemCommandLineConstants.COMMAND_PRINT_TYPE_ATTRIBUTES;
 	}
 
-								public void setRequiredParameters() {
+	public void setRequiredParameters() {
 		super.setRequiredParameters();
-		getParameterManager()
-				.syntaxAddRequiredParameter(
-						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY,
-						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY_EXAMPLE);
-		getParameterManager()
-				.syntaxAddRequiredParameter(
-						IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY,
-						IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY_EXAMPLE);
+		getParameterManager().syntaxAddRequiredParameter(
+				IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY,
+				IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY_EXAMPLE);
+		getParameterManager().syntaxAddRequiredParameter(IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY,
+				IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY_EXAMPLE);
 	}
 
-								@Override
+	@Override
 	public OperationResult process() throws TeamRepositoryException {
 		String projectAreaName = getParameterManager()
-				.consumeParameter(
-						IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY)
-				.trim();
+				.consumeParameter(IWorkItemCommandLineConstants.PARAMETER_PROJECT_AREA_NAME_PROPERTY).trim();
 
-		IProjectArea projectArea = ProcessAreaUtil.findProjectAreaByFQN(
-				projectAreaName, getProcessClientService(), getMonitor());
+		IProjectArea projectArea = ProcessAreaUtil.findProjectAreaByFQN(projectAreaName, getProcessClientService(),
+				getMonitor());
 		if (projectArea == null) {
-			throw new WorkItemCommandLineException("Project Area not found: "
-					+ projectAreaName);
+			throw new WorkItemCommandLineException("Project Area not found: " + projectAreaName);
 		}
 
-		String workItemTypeID = getParameterManager().consumeParameter(
-				IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY)
-				.trim();
-		IWorkItemType workItemType = getWorkItemCommon().findWorkItemType(
-				projectArea, workItemTypeID, getMonitor());
+		String workItemTypeID = getParameterManager()
+				.consumeParameter(IWorkItemCommandLineConstants.PARAMETER_WORKITEM_TYPE_PROPERTY).trim();
+		IWorkItemType workItemType = getWorkItemCommon().findWorkItemType(projectArea, workItemTypeID, getMonitor());
 		if (workItemType == null) {
-			throw new WorkItemCommandLineException("Work item type not found: "
-					+ workItemTypeID);
+			throw new WorkItemCommandLineException("Work item type not found: " + workItemTypeID);
 		}
 		this.addOperationResult(printTypeAttributes(projectArea, workItemType));
 		return getResult();
 	}
 
-										private OperationResult printTypeAttributes(IProjectArea projectArea,
-			IWorkItemType workItemType) throws TeamRepositoryException {
+	private OperationResult printTypeAttributes(IProjectArea projectArea, IWorkItemType workItemType)
+			throws TeamRepositoryException {
 
-		WorkItemTypeHelper workItemTypeHelper = new WorkItemTypeHelper(
-				projectArea, getMonitor());
+		WorkItemTypeHelper workItemTypeHelper = new WorkItemTypeHelper(projectArea, getMonitor());
 
-		return workItemTypeHelper.printAttributesOfType(projectArea,
-				workItemType, getMonitor());
+		return workItemTypeHelper.printAttributesOfType(projectArea, workItemType, getMonitor());
 	}
 
 	@Override

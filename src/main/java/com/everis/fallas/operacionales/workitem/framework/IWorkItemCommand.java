@@ -7,14 +7,13 @@ import com.ibm.team.repository.common.TeamRepositoryException;
 
 public interface IWorkItemCommand {
 
-				public String getCommandName();
+	public String getCommandName();
 
-						public void initialize();
+	public void initialize();
 
-									public OperationResult execute(IProgressMonitor monitor)
-			throws TeamRepositoryException;
+	public OperationResult execute(IProgressMonitor monitor) throws TeamRepositoryException;
 
-						public String helpUsage();
+	public String helpUsage();
 
-				public void validateRequiredParameters();
+	public void validateRequiredParameters();
 }

@@ -11,18 +11,13 @@ import com.ibm.team.workitem.common.model.IAttribute;
 
 public class AttributeUtil {
 
-																					public static IAttribute resolveAttribute(String attributeID,
-			IProjectAreaHandle projectAreaHandle, IProgressMonitor monitor)
-			throws TeamRepositoryException {
+	public static IAttribute resolveAttribute(String attributeID, IProjectAreaHandle projectAreaHandle,
+			IProgressMonitor monitor) throws TeamRepositoryException {
 		if (projectAreaHandle == null) {
-			throw new WorkItemCommandLineException(
-					"Resolve Attribute: project area handle must not be null");
+			throw new WorkItemCommandLineException("Resolve Attribute: project area handle must not be null");
 		}
-		ITeamRepository teamRepository = (ITeamRepository) projectAreaHandle
-				.getOrigin();
-		IWorkItemCommon workItemCommon = (IWorkItemCommon) teamRepository
-				.getClientLibrary(IWorkItemCommon.class);
-		return workItemCommon.findAttribute(projectAreaHandle, attributeID,
-				monitor);
+		ITeamRepository teamRepository = (ITeamRepository) projectAreaHandle.getOrigin();
+		IWorkItemCommon workItemCommon = (IWorkItemCommon) teamRepository.getClientLibrary(IWorkItemCommon.class);
+		return workItemCommon.findAttribute(projectAreaHandle, attributeID, monitor);
 	}
 }

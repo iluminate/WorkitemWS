@@ -17,25 +17,19 @@ public class ColumnHeaderAttributeNameMapper {
 
 	private HashMap<String, String> nameIDMap = new HashMap<String, String>(50);
 	private HashMap<String, String> idNameMap = new HashMap<String, String>(50);
-	private HashMap<String, IAttribute> attributeMap = new HashMap<String, IAttribute>(
-			50);
-	private HashMap<String, IEndPointDescriptor> linkMap = new HashMap<String, IEndPointDescriptor>(
-			50);
+	private HashMap<String, IAttribute> attributeMap = new HashMap<String, IAttribute>(50);
+	private HashMap<String, IEndPointDescriptor> linkMap = new HashMap<String, IEndPointDescriptor>(50);
 
-									public ColumnHeaderAttributeNameMapper(
-			IProjectAreaHandle projectAreaHandle,
-			IWorkItemCommon workItemCommon, IProgressMonitor monitor)
-			throws TeamRepositoryException {
+	public ColumnHeaderAttributeNameMapper(IProjectAreaHandle projectAreaHandle, IWorkItemCommon workItemCommon,
+			IProgressMonitor monitor) throws TeamRepositoryException {
 		super();
 		getAttributeNameMap(projectAreaHandle, workItemCommon, monitor);
 	}
 
-									private void getAttributeNameMap(IProjectAreaHandle projectAreaHandle,
-			IWorkItemCommon workItemCommon, IProgressMonitor monitor)
-			throws TeamRepositoryException {
+	private void getAttributeNameMap(IProjectAreaHandle projectAreaHandle, IWorkItemCommon workItemCommon,
+			IProgressMonitor monitor) throws TeamRepositoryException {
 
-		List<IAttribute> attributes = workItemCommon.findAttributes(
-				projectAreaHandle, monitor);
+		List<IAttribute> attributes = workItemCommon.findAttributes(projectAreaHandle, monitor);
 		for (IAttribute attribute : attributes) {
 			String displayName = attribute.getDisplayName();
 			String id = attribute.getIdentifier();
@@ -48,12 +42,11 @@ public class ColumnHeaderAttributeNameMapper {
 			String linkID = ParameterLinkIDMapper.getinternalID(linkName);
 			nameIDMap.put(linkName, linkID);
 			idNameMap.put(linkID, linkName);
-			linkMap.put(linkID,
-					ReferenceUtil.getReferenceEndpointDescriptor(linkID));
+			linkMap.put(linkID, ReferenceUtil.getReferenceEndpointDescriptor(linkID));
 		}
 	}
 
-									private String getIDForName(String propertyName) {
+	private String getIDForName(String propertyName) {
 		String id = nameIDMap.get(propertyName);
 		if (id == null) {
 			return null;
@@ -61,16 +54,16 @@ public class ColumnHeaderAttributeNameMapper {
 		return id;
 	}
 
-								private String getAliasID(String attributeName) {
+	private String getAliasID(String attributeName) {
 		return ParameterIDMapper.getAlias(attributeName);
 	}
 
-							private boolean hasID(String attributeName) {
+	private boolean hasID(String attributeName) {
 		String alias = ParameterIDMapper.getAlias(attributeName);
 		return idNameMap.containsKey(alias);
 	}
 
-							public String getID(String nameOrID) {
+	public String getID(String nameOrID) {
 		if (hasID(nameOrID)) {
 			nameOrID = getAliasID(nameOrID);
 		} else {
@@ -82,15 +75,15 @@ public class ColumnHeaderAttributeNameMapper {
 		return nameOrID;
 	}
 
-					public IAttribute getAttribute(String attributeID) {
+	public IAttribute getAttribute(String attributeID) {
 		return attributeMap.get(attributeID);
 	}
 
-					public String getDisplayNameForID(String id) {
+	public String getDisplayNameForID(String id) {
 		return this.nameIDMap.get(id);
 	}
 
-					public boolean isLinkType(String linkID) {
+	public boolean isLinkType(String linkID) {
 		return linkMap.containsKey(linkID);
 	}
 

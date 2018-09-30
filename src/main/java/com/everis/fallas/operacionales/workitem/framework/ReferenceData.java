@@ -8,16 +8,16 @@ public class ReferenceData {
 	private IEndPointDescriptor endpoint = null;
 	private IReference reference = null;
 
-									public ReferenceData(IEndPointDescriptor endPoint, IReference reference) {
+	public ReferenceData(IEndPointDescriptor endPoint, IReference reference) {
 		this.endpoint = endPoint;
 		this.reference = reference;
 	}
 
-				public IEndPointDescriptor getEndPointDescriptor() {
+	public IEndPointDescriptor getEndPointDescriptor() {
 		return this.endpoint;
 	}
 
-				public IReference getReference() {
+	public IReference getReference() {
 		return this.reference;
 	}
 }

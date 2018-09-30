@@ -13,6 +13,7 @@ public class OperationResult implements Serializable {
 		this.resultMessage = "";
 		this.result = false;
 	}
+
 	public String getResultString() {
 		return resultMessage;
 	}

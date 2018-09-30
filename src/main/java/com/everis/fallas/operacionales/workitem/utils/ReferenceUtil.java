@@ -55,138 +55,89 @@ public class ReferenceUtil {
 	private static HashMap<String, IEndPointDescriptor> fCLM_WI_EndPointDescriptorMap = null;
 	private static HashMap<String, IEndPointDescriptor> fBuild_EndPointDescriptorMap = null;
 
-
-							public static HashMap<String, IEndPointDescriptor> getWorkItemEndPointDescriptorMap() {
+	public static HashMap<String, IEndPointDescriptor> getWorkItemEndPointDescriptorMap() {
 		if (fWorkItemEndPointDescriptorMap == null) {
 			HashMap<String, IEndPointDescriptor> map = new HashMap<String, IEndPointDescriptor>();
-			map.put(ReferenceUtil.LINKTYPE_PARENT,
-					WorkItemEndPoints.PARENT_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_CHILD,
-					WorkItemEndPoints.CHILD_WORK_ITEMS);
-			map.put(ReferenceUtil.LINKTYPE_BLOCKS_WORKITEM,
-					WorkItemEndPoints.BLOCKS_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_COPIED_FROM_WORKITEM,
-					WorkItemEndPoints.COPIED_FROM_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_COPIED_WORKITEM,
-					WorkItemEndPoints.COPIED_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_DEPENDS_ON_WORKITEM,
-					WorkItemEndPoints.DEPENDS_ON_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_DUPLICATE_OF_WORKITEM,
-					WorkItemEndPoints.DUPLICATE_OF_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_DUPLICATE_WORKITEM,
-					WorkItemEndPoints.DUPLICATE_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_MENTIONS_WORKITEM,
-					WorkItemEndPoints.MENTIONS);
-			map.put(ReferenceUtil.LINKTYPE_PREDECESSOR_WORKITEM,
-					WorkItemEndPoints.PREDECESSOR_WORK_ITEMS);
-			map.put(ReferenceUtil.LINKTYPE_RELATED_WORKITEM,
-					WorkItemEndPoints.RELATED_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_RESOLVED_BY_WORKITEM,
-					WorkItemEndPoints.RESOLVED_BY_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_RESOLVES_WORKITEM,
-					WorkItemEndPoints.RESOLVES_WORK_ITEM);
-			map.put(ReferenceUtil.LINKTYPE_SUCCESSOR_WORKITEM,
-					WorkItemEndPoints.SUCCESSOR_WORK_ITEMS);
+			map.put(ReferenceUtil.LINKTYPE_PARENT, WorkItemEndPoints.PARENT_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_CHILD, WorkItemEndPoints.CHILD_WORK_ITEMS);
+			map.put(ReferenceUtil.LINKTYPE_BLOCKS_WORKITEM, WorkItemEndPoints.BLOCKS_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_COPIED_FROM_WORKITEM, WorkItemEndPoints.COPIED_FROM_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_COPIED_WORKITEM, WorkItemEndPoints.COPIED_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_DEPENDS_ON_WORKITEM, WorkItemEndPoints.DEPENDS_ON_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_DUPLICATE_OF_WORKITEM, WorkItemEndPoints.DUPLICATE_OF_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_DUPLICATE_WORKITEM, WorkItemEndPoints.DUPLICATE_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_MENTIONS_WORKITEM, WorkItemEndPoints.MENTIONS);
+			map.put(ReferenceUtil.LINKTYPE_PREDECESSOR_WORKITEM, WorkItemEndPoints.PREDECESSOR_WORK_ITEMS);
+			map.put(ReferenceUtil.LINKTYPE_RELATED_WORKITEM, WorkItemEndPoints.RELATED_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_RESOLVED_BY_WORKITEM, WorkItemEndPoints.RESOLVED_BY_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_RESOLVES_WORKITEM, WorkItemEndPoints.RESOLVES_WORK_ITEM);
+			map.put(ReferenceUtil.LINKTYPE_SUCCESSOR_WORKITEM, WorkItemEndPoints.SUCCESSOR_WORK_ITEMS);
 			fWorkItemEndPointDescriptorMap = map;
 		}
 
 		return fWorkItemEndPointDescriptorMap;
 	}
 
-							public static HashMap<String, IEndPointDescriptor> getCLM_URI_EndPointDescriptorMap() {
+	public static HashMap<String, IEndPointDescriptor> getCLM_URI_EndPointDescriptorMap() {
 		if (fCLM_URI_EndPointDescriptorMap == null) {
 			HashMap<String, IEndPointDescriptor> map = new HashMap<String, IEndPointDescriptor>();
-			map.put(ReferenceUtil.LINKTYPE_RELATED_ARTIFACT,
-					WorkItemEndPoints.RELATED_ARTIFACT);
-			map.put(ReferenceUtil.LINKTYPE_AFFECTS_EXECUTION_RESULT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.AFFECTS_EXECUTION_RESULT)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_IMPLEMENTS_REQUIREMENT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.IMPLEMENTS_REQUIREMENT)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_RELATED_TEST_EXECUTION_RECORD,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.RELATED_EXECUTION_RECORD)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_AFFECTS_REQUIREMENT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.RELATED_REQUIREMENT)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_RELATED_TEST_CASE,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.RELATED_TEST_CASE)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_RELATED_TEST_PLAN,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.RELATED_TEST_PLAN)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_BLOCKS_TEST_EXECUTION,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.BLOCKS_EXECUTION_RECORD)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_TESTED_BY_TEST_CASE,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.TESTED_BY_TEST_CASE)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_TRACKS_CHANGES,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.TRACKS_CHANGES)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_TRACKS_REQUIREMENT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.TRACKS_REQUIREMENT)
-							.getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_RELATED_ARTIFACT, WorkItemEndPoints.RELATED_ARTIFACT);
+			map.put(ReferenceUtil.LINKTYPE_AFFECTS_EXECUTION_RESULT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.AFFECTS_EXECUTION_RESULT).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_IMPLEMENTS_REQUIREMENT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.IMPLEMENTS_REQUIREMENT).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_RELATED_TEST_EXECUTION_RECORD, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.RELATED_EXECUTION_RECORD).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_AFFECTS_REQUIREMENT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.RELATED_REQUIREMENT).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_RELATED_TEST_CASE, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.RELATED_TEST_CASE).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_RELATED_TEST_PLAN, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.RELATED_TEST_PLAN).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_BLOCKS_TEST_EXECUTION, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.BLOCKS_EXECUTION_RECORD).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_TESTED_BY_TEST_CASE, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.TESTED_BY_TEST_CASE).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_TRACKS_CHANGES, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.TRACKS_CHANGES).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_TRACKS_REQUIREMENT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.TRACKS_REQUIREMENT).getTargetEndPointDescriptor());
 			fCLM_URI_EndPointDescriptorMap = map;
 		}
 		return fCLM_URI_EndPointDescriptorMap;
 	}
 
-								public static HashMap<String, IEndPointDescriptor> getCLM_WI_EndPointDescriptorMap() {
+	public static HashMap<String, IEndPointDescriptor> getCLM_WI_EndPointDescriptorMap() {
 
 		if (fCLM_WI_EndPointDescriptorMap == null) {
 			HashMap<String, IEndPointDescriptor> map = new HashMap<String, IEndPointDescriptor>();
-			map.put(ReferenceUtil.LINKTYPE_AFFECTED_BY_DEFECT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.AFFECTED_BY_DEFECT)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_AFFECTS_PLAN_ITEM,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.AFFECTS_PLAN_ITEM)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_RELATED_CHANGE_MANAGEMENT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.RELATED_CHANGE_MANAGEMENT)
-							.getTargetEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_TRACKS_WORK_ITEM,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							WorkItemLinkTypes.TRACKS_WORK_ITEM)
-							.getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_AFFECTED_BY_DEFECT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.AFFECTED_BY_DEFECT).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_AFFECTS_PLAN_ITEM, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.AFFECTS_PLAN_ITEM).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_RELATED_CHANGE_MANAGEMENT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.RELATED_CHANGE_MANAGEMENT).getTargetEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_TRACKS_WORK_ITEM, ILinkTypeRegistry.INSTANCE
+					.getLinkType(WorkItemLinkTypes.TRACKS_WORK_ITEM).getTargetEndPointDescriptor());
 			fCLM_WI_EndPointDescriptorMap = map;
 		}
 		return fCLM_WI_EndPointDescriptorMap;
 	}
 
-								public static HashMap<String, IEndPointDescriptor> getBuild_EndPointDescriptorMap() {
+	public static HashMap<String, IEndPointDescriptor> getBuild_EndPointDescriptorMap() {
 
 		if (fBuild_EndPointDescriptorMap == null) {
 			HashMap<String, IEndPointDescriptor> map = new HashMap<String, IEndPointDescriptor>();
-			map.put(ReferenceUtil.LINKTYPE_REPORTED_AGAINST_BUILDRESULT,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							BuildLinkTypes.REPORTED_WORK_ITEMS)
-							.getSourceEndPointDescriptor());
-			map.put(ReferenceUtil.LINKTYPE_INCLUDEDINBUILD,
-					ILinkTypeRegistry.INSTANCE.getLinkType(
-							BuildLinkTypes.INCLUDED_WORK_ITEMS)
-							.getSourceEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_REPORTED_AGAINST_BUILDRESULT, ILinkTypeRegistry.INSTANCE
+					.getLinkType(BuildLinkTypes.REPORTED_WORK_ITEMS).getSourceEndPointDescriptor());
+			map.put(ReferenceUtil.LINKTYPE_INCLUDEDINBUILD, ILinkTypeRegistry.INSTANCE
+					.getLinkType(BuildLinkTypes.INCLUDED_WORK_ITEMS).getSourceEndPointDescriptor());
 			fBuild_EndPointDescriptorMap = map;
 		}
 		return fBuild_EndPointDescriptorMap;
 	}
 
-							public static IEndPointDescriptor getReferenceEndpointDescriptor(
-			String linkID) {
+	public static IEndPointDescriptor getReferenceEndpointDescriptor(String linkID) {
 		linkID = ParameterLinkIDMapper.getinternalID(linkID);
 		if (linkID == null) {
 			return null;
@@ -210,7 +161,7 @@ public class ReferenceUtil {
 		return null;
 	}
 
-							public static String getReferenceType(String linkID) {
+	public static String getReferenceType(String linkID) {
 		linkID = ParameterLinkIDMapper.getinternalID(linkID);
 		if (linkID == null) {
 			return null;
@@ -234,39 +185,38 @@ public class ReferenceUtil {
 		return null;
 	}
 
-							public static boolean isLinkType(String linkID) {
+	public static boolean isLinkType(String linkID) {
 		if (getReferenceEndpointDescriptor(linkID) == null) {
 			return false;
 		}
 		return true;
 	}
 
-							private static IEndPointDescriptor getBuildLinkType(String linkID) {
+	private static IEndPointDescriptor getBuildLinkType(String linkID) {
 		HashMap<String, IEndPointDescriptor> map = getBuild_EndPointDescriptorMap();
 		return map.get(linkID);
 	}
 
-							private static IEndPointDescriptor getCLM_URI_LinkType(String linkID) {
+	private static IEndPointDescriptor getCLM_URI_LinkType(String linkID) {
 		HashMap<String, IEndPointDescriptor> map = getCLM_URI_EndPointDescriptorMap();
 		return map.get(linkID);
 	}
 
-							private static IEndPointDescriptor getCLM_WI_LinkType(String linkID) {
+	private static IEndPointDescriptor getCLM_WI_LinkType(String linkID) {
 		HashMap<String, IEndPointDescriptor> map = getCLM_WI_EndPointDescriptorMap();
 		return map.get(linkID);
 	}
 
-							private static IEndPointDescriptor getWorkItemLinkType(String linkID) {
+	private static IEndPointDescriptor getWorkItemLinkType(String linkID) {
 		HashMap<String, IEndPointDescriptor> map = getWorkItemEndPointDescriptorMap();
 		return map.get(linkID);
 	}
 
-							public static boolean isWorkItemLink(String linkID) {
+	public static boolean isWorkItemLink(String linkID) {
 		if (null != ReferenceUtil.getCLM_WI_EndPointDescriptorMap().get(linkID)) {
 			return true;
 		}
-		if (null != ReferenceUtil.getWorkItemEndPointDescriptorMap()
-				.get(linkID)) {
+		if (null != ReferenceUtil.getWorkItemEndPointDescriptorMap().get(linkID)) {
 			return true;
 		}
 		return false;

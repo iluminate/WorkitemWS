@@ -15,53 +15,47 @@ import com.ibm.team.workitem.common.model.IWorkItem;
 import com.ibm.team.workitem.common.model.IWorkItemType;
 import com.ibm.team.workitem.common.model.ItemProfile;
 
-public abstract class AbstractWorkItemModificationCommand extends
-		AbstractTeamRepositoryCommand {
+public abstract class AbstractWorkItemModificationCommand extends AbstractTeamRepositoryCommand {
 
 	private boolean fIgnoreErrors = false;
 
-							public void setIgnoreErrors(boolean value) {
+	public void setIgnoreErrors(boolean value) {
 		this.fIgnoreErrors = value;
 	}
 
-						public boolean isIgnoreErrors() {
+	public boolean isIgnoreErrors() {
 		return this.fIgnoreErrors;
 	}
 
-							protected AbstractWorkItemModificationCommand(
-			ParameterManager parametermanager) {
+	protected AbstractWorkItemModificationCommand(ParameterManager parametermanager) {
 		super(parametermanager);
 	}
 
-						protected class ModifyWorkItem extends WorkItemOperation {
+	protected class ModifyWorkItem extends WorkItemOperation {
 
-														public ModifyWorkItem(String message) {
+		public ModifyWorkItem(String message) {
 			super(message, IWorkItem.FULL_PROFILE);
 		}
 
-														public ModifyWorkItem(String message, ItemProfile<IWorkItem> profile) {
+		public ModifyWorkItem(String message, ItemProfile<IWorkItem> profile) {
 			super(message, profile);
 		}
 
-																						@Override
-		protected void execute(WorkItemWorkingCopy workingCopy,
-				IProgressMonitor monitor) throws TeamRepositoryException,
-				RuntimeException {
+		@Override
+		protected void execute(WorkItemWorkingCopy workingCopy, IProgressMonitor monitor)
+				throws TeamRepositoryException, RuntimeException {
 			update(workingCopy);
 		}
 	}
 
-										public void update(WorkItemWorkingCopy workingCopy)
-			throws RuntimeException, TeamRepositoryException {
+	public void update(WorkItemWorkingCopy workingCopy) throws RuntimeException, TeamRepositoryException {
 
 		ParameterList arguments = getParameterManager().getArguments();
 
-		WorkItemUpdateHelper workItemHelper = new WorkItemUpdateHelper(
-				workingCopy, arguments, getMonitor());
+		WorkItemUpdateHelper workItemHelper = new WorkItemUpdateHelper(workingCopy, arguments, getMonitor());
 
 		for (Parameter parameter : arguments) {
-			if (!(parameter.isConsumed() || parameter.isSwitch() || parameter
-					.isCommand())) {
+			if (!(parameter.isConsumed() || parameter.isSwitch() || parameter.isCommand())) {
 				String propertyName = parameter.getName();
 				String propertyValue = parameter.getValue();
 				try {
@@ -74,14 +68,12 @@ public abstract class AbstractWorkItemModificationCommand extends
 						throw e;
 					}
 				} catch (RuntimeException e) {
-					this.appendResultString("Runtime Exception: Property "
-							+ propertyName + " Value " + propertyValue + " \n"
-							+ e.getMessage());
+					this.appendResultString("Runtime Exception: Property " + propertyName + " Value " + propertyValue
+							+ " \n" + e.getMessage());
 					e.printStackTrace();
 					throw e;
 				} catch (IOException e) {
-					this.appendResultString("IO Exception: Property "
-							+ propertyName + " Value " + propertyValue + " \n"
+					this.appendResultString("IO Exception: Property " + propertyName + " Value " + propertyValue + " \n"
 							+ e.getMessage());
 					throw new RuntimeException(e.getMessage(), e);
 				}
@@ -89,24 +81,21 @@ public abstract class AbstractWorkItemModificationCommand extends
 		}
 	}
 
-						protected class ChangeType extends WorkItemOperation {
+	protected class ChangeType extends WorkItemOperation {
 
 		private IWorkItemType fOldType;
 		private IWorkItemType fNewType;
 
-														public ChangeType(String message, IWorkItemType oldType,
-				IWorkItemType newType) {
+		public ChangeType(String message, IWorkItemType oldType, IWorkItemType newType) {
 			super(message, IWorkItem.FULL_PROFILE);
 			this.fOldType = oldType;
 			this.fNewType = newType;
 		}
 
-																						@Override
-		protected void execute(WorkItemWorkingCopy workingCopy,
-				IProgressMonitor monitor) throws TeamRepositoryException,
-				RuntimeException {
-			getWorkItemCommon().updateWorkItemType(workingCopy.getWorkItem(),
-					fNewType, fOldType, getMonitor());
+		@Override
+		protected void execute(WorkItemWorkingCopy workingCopy, IProgressMonitor monitor)
+				throws TeamRepositoryException, RuntimeException {
+			getWorkItemCommon().updateWorkItemType(workingCopy.getWorkItem(), fNewType, fOldType, getMonitor());
 		}
 	}
 

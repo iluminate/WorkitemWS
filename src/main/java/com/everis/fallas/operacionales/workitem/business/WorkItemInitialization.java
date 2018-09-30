@@ -16,11 +16,11 @@ import com.ibm.team.workitem.client.WorkItemWorkingCopy;
 public class WorkItemInitialization extends WorkItemOperation {
 
 	private final static Logger log = Logger.getLogger(WorkItemInitialization.class);
-	
+
 	private List<Parametro> parametros;
 	private WorkItemWorkingCopy workingCopy;
 	private String message;
-	
+
 	public WorkItemInitialization(List<Parametro> parametros, String message) {
 		super("create");
 		this.parametros = parametros;
@@ -28,8 +28,7 @@ public class WorkItemInitialization extends WorkItemOperation {
 	}
 
 	@Override
-	protected void execute(WorkItemWorkingCopy workingCopy,
-			IProgressMonitor monitor) throws TeamRepositoryException {
+	protected void execute(WorkItemWorkingCopy workingCopy, IProgressMonitor monitor) throws TeamRepositoryException {
 		this.workingCopy = workingCopy;
 		try {
 			update(parametros);
@@ -48,7 +47,7 @@ public class WorkItemInitialization extends WorkItemOperation {
 			} catch (RuntimeException e) {
 				log.error(message + "RuntimeException: ", e);
 			}
-			log.info(message + "{" +parametro.getName() + ":" + parametro.getValue() + "}");
+			log.info(message + "{" + parametro.getName() + ":" + parametro.getValue() + "}");
 		}
 	}
 }

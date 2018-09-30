@@ -48,72 +48,53 @@ public class ParameterLinkIDMapper {
 		setMappings();
 	}
 
-							protected void setMappings() {
-		putMap(LINKNAME_AFFECTED_BY_DEFECT,
-				ReferenceUtil.LINKTYPE_AFFECTED_BY_DEFECT);
-		putMap(LINKNAME_AFFECTS_TEST_RESULT,
-				ReferenceUtil.LINKTYPE_AFFECTS_EXECUTION_RESULT);
-		putMap(LINKNAME_AFFECTS_PLAN_ITEM,
-				ReferenceUtil.LINKTYPE_AFFECTS_PLAN_ITEM);
-		putMap(LINKNAME_AFFECTS_REQUIREMENT,
-				ReferenceUtil.LINKTYPE_AFFECTS_REQUIREMENT);
-		putMap(LINKNAME_BLOCKS_TEST_EXECUTION,
-				ReferenceUtil.LINKTYPE_BLOCKS_TEST_EXECUTION);
+	protected void setMappings() {
+		putMap(LINKNAME_AFFECTED_BY_DEFECT, ReferenceUtil.LINKTYPE_AFFECTED_BY_DEFECT);
+		putMap(LINKNAME_AFFECTS_TEST_RESULT, ReferenceUtil.LINKTYPE_AFFECTS_EXECUTION_RESULT);
+		putMap(LINKNAME_AFFECTS_PLAN_ITEM, ReferenceUtil.LINKTYPE_AFFECTS_PLAN_ITEM);
+		putMap(LINKNAME_AFFECTS_REQUIREMENT, ReferenceUtil.LINKTYPE_AFFECTS_REQUIREMENT);
+		putMap(LINKNAME_BLOCKS_TEST_EXECUTION, ReferenceUtil.LINKTYPE_BLOCKS_TEST_EXECUTION);
 		putMap(LINKNAME_BLOCKS, ReferenceUtil.LINKTYPE_BLOCKS_WORKITEM);
 		putMap(LINKNAME_CHILDREN, ReferenceUtil.LINKTYPE_CHILD);
-		putMap(LINKNAME_COPIED_FROM,
-				ReferenceUtil.LINKTYPE_COPIED_FROM_WORKITEM);
+		putMap(LINKNAME_COPIED_FROM, ReferenceUtil.LINKTYPE_COPIED_FROM_WORKITEM);
 		putMap(LINKNAME_COPIES, ReferenceUtil.LINKTYPE_COPIED_WORKITEM);
 		putMap(LINKNAME_DEPENDS_ON, ReferenceUtil.LINKTYPE_DEPENDS_ON_WORKITEM);
-		putMap(LINKNAME_DUPLICATE_OF,
-				ReferenceUtil.LINKTYPE_DUPLICATE_OF_WORKITEM);
-		putMap(LINKNAME_DUPLICATED_BY,
-				ReferenceUtil.LINKTYPE_DUPLICATE_WORKITEM);
-		putMap(LINKNAME_IMPLEMENTS_REQUIREMENT,
-				ReferenceUtil.LINKTYPE_IMPLEMENTS_REQUIREMENT);
-		putMap(LINKNAME_INCLUDED_IN_BUILDS,
-				ReferenceUtil.LINKTYPE_INCLUDEDINBUILD);
+		putMap(LINKNAME_DUPLICATE_OF, ReferenceUtil.LINKTYPE_DUPLICATE_OF_WORKITEM);
+		putMap(LINKNAME_DUPLICATED_BY, ReferenceUtil.LINKTYPE_DUPLICATE_WORKITEM);
+		putMap(LINKNAME_IMPLEMENTS_REQUIREMENT, ReferenceUtil.LINKTYPE_IMPLEMENTS_REQUIREMENT);
+		putMap(LINKNAME_INCLUDED_IN_BUILDS, ReferenceUtil.LINKTYPE_INCLUDEDINBUILD);
 		putMap(LINKNAME_PARENT, ReferenceUtil.LINKTYPE_PARENT);
-		putMap(LINKNAME_PREDECESSOR,
-				ReferenceUtil.LINKTYPE_PREDECESSOR_WORKITEM);
-		putMap(LINKNAME_RELATED_ARTIFACTS,
-				ReferenceUtil.LINKTYPE_RELATED_ARTIFACT);
-		putMap(LINKNAME_RELATED_TEST_CASE,
-				ReferenceUtil.LINKTYPE_RELATED_TEST_CASE);
-		putMap(LINKNAME_RELATED_TEST_EXECUTION_RECORD,
-				ReferenceUtil.LINKTYPE_RELATED_TEST_EXECUTION_RECORD);
-		putMap(LINKNAME_RELATED_TEST_PLAN,
-				ReferenceUtil.LINKTYPE_RELATED_TEST_PLAN);
+		putMap(LINKNAME_PREDECESSOR, ReferenceUtil.LINKTYPE_PREDECESSOR_WORKITEM);
+		putMap(LINKNAME_RELATED_ARTIFACTS, ReferenceUtil.LINKTYPE_RELATED_ARTIFACT);
+		putMap(LINKNAME_RELATED_TEST_CASE, ReferenceUtil.LINKTYPE_RELATED_TEST_CASE);
+		putMap(LINKNAME_RELATED_TEST_EXECUTION_RECORD, ReferenceUtil.LINKTYPE_RELATED_TEST_EXECUTION_RECORD);
+		putMap(LINKNAME_RELATED_TEST_PLAN, ReferenceUtil.LINKTYPE_RELATED_TEST_PLAN);
 		putMap(LINKNAME_RELATED, ReferenceUtil.LINKTYPE_RELATED_WORKITEM);
-		putMap(LINKNAME_REPORTED_AGAINST_BUILD,
-				ReferenceUtil.LINKTYPE_REPORTED_AGAINST_BUILDRESULT);
-		putMap(LINKNAME_RESOLVED_BY,
-				ReferenceUtil.LINKTYPE_RESOLVED_BY_WORKITEM);
+		putMap(LINKNAME_REPORTED_AGAINST_BUILD, ReferenceUtil.LINKTYPE_REPORTED_AGAINST_BUILDRESULT);
+		putMap(LINKNAME_RESOLVED_BY, ReferenceUtil.LINKTYPE_RESOLVED_BY_WORKITEM);
 		putMap(LINKNAME_RESOLVES, ReferenceUtil.LINKTYPE_RESOLVES_WORKITEM);
 		putMap(LINKNAME_SUCCESSOR, ReferenceUtil.LINKTYPE_SUCCESSOR_WORKITEM);
-		putMap(LINKNAME_TESTED_BY_TEST_CASE,
-				ReferenceUtil.LINKTYPE_TESTED_BY_TEST_CASE);
-		putMap(LINKNAME_TRACKS_REQUIREMENT,
-				ReferenceUtil.LINKTYPE_TRACKS_REQUIREMENT);
+		putMap(LINKNAME_TESTED_BY_TEST_CASE, ReferenceUtil.LINKTYPE_TESTED_BY_TEST_CASE);
+		putMap(LINKNAME_TRACKS_REQUIREMENT, ReferenceUtil.LINKTYPE_TRACKS_REQUIREMENT);
 		putMap(LINKNAME_TRACKS, ReferenceUtil.LINKTYPE_TRACKS_WORK_ITEM);
 	}
 
-									protected void putMap(String key, String value) {
+	protected void putMap(String key, String value) {
 		getMap().put(key, value);
 	}
 
-						protected HashMap<String, String> getMap() {
+	protected HashMap<String, String> getMap() {
 		return this.iDMap;
 	}
 
-								public String getFromAlias(String linkName) {
+	public String getFromAlias(String linkName) {
 		String newVal = iDMap.get(linkName);
 		if (null != newVal)
 			return newVal;
 		return linkName;
 	}
 
-				public String helpMappings() {
+	public String helpMappings() {
 		String mappings = "Available mappings:\n";
 
 		Set<String> keys = iDMap.keySet();
@@ -123,22 +104,22 @@ public class ParameterLinkIDMapper {
 		return mappings + "\n";
 	}
 
-						private static ParameterLinkIDMapper getMapper() {
+	private static ParameterLinkIDMapper getMapper() {
 		if (theMapper == null) {
 			theMapper = new ParameterLinkIDMapper();
 		}
 		return theMapper;
 	}
 
-									public static String getinternalID(String linkName) {
+	public static String getinternalID(String linkName) {
 		return getMapper().getFromAlias(linkName);
 	}
 
-						public static String helpParameterMappings() {
+	public static String helpParameterMappings() {
 		return getMapper().helpMappings();
 	}
 
-						public static Set<String> getLinkNames() {
+	public static Set<String> getLinkNames() {
 		return getMapper().getMap().keySet();
 	}
 }

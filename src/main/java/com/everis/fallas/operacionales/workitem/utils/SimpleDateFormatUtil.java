@@ -19,8 +19,7 @@ public class SimpleDateFormatUtil {
 		return createTimeStamp(aDate, null);
 	}
 
-	public static Timestamp createTimeStamp(String aDate,
-			String timeFormatPattern) {
+	public static Timestamp createTimeStamp(String aDate, String timeFormatPattern) {
 		if (null == timeFormatPattern) {
 			timeFormatPattern = SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD_HH_MM_SS_Z;
 		}
@@ -29,14 +28,13 @@ public class SimpleDateFormatUtil {
 			Date date = sDFormat.parse(aDate);
 			return new Timestamp(date.getTime());
 		} catch (ParseException e) {
-			throw new WorkItemCommandLineException("Parse Exception! Input: "
-					+ aDate + " Parsing pattern: " + timeFormatPattern, e);
+			throw new WorkItemCommandLineException(
+					"Parse Exception! Input: " + aDate + " Parsing pattern: " + timeFormatPattern, e);
 		}
 	}
 
 	public static boolean sameDay(Timestamp date1, Timestamp date2) {
-		SimpleDateFormat sDFormat = new SimpleDateFormat(
-				SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD);
+		SimpleDateFormat sDFormat = new SimpleDateFormat(SIMPLE_DATE_FORMAT_PATTERN_YYYY_MM_DD);
 		return sDFormat.format(date1).equals(sDFormat.format(date2));
 	}
 
@@ -64,12 +62,10 @@ public class SimpleDateFormatUtil {
 		}
 		if (minsIndex > 0) {
 			int start = 0;
-			if (hoursIndex>0){
+			if (hoursIndex > 0) {
 				start = hoursIndex + DURATION_HOURS.length();
 			}
-			String minutes = duration.substring(
-					start,
-					duration.length() - DURATION_MINUTES.length()).trim();
+			String minutes = duration.substring(start, duration.length() - DURATION_MINUTES.length()).trim();
 			time += TimeUnit.MINUTES.toMillis(new Long(minutes));
 		}
 		return time;

@@ -15,11 +15,10 @@ import com.ibm.team.workitem.common.IAuditableCommon;
 
 public class AccessContextUtil {
 
-				public static final String PUBLIC_ACCESS = "Public";
+	public static final String PUBLIC_ACCESS = "Public";
 
-										public static Object getAccessContextFromUUID(UUID uuid,
-			ITeamRepository teamRepository, IAuditableCommon auditableCommon,
-			IProgressMonitor monitor) {
+	public static Object getAccessContextFromUUID(UUID uuid, ITeamRepository teamRepository,
+			IAuditableCommon auditableCommon, IProgressMonitor monitor) {
 		if (uuid == null) {
 			return null;
 		}
@@ -27,21 +26,18 @@ public class AccessContextUtil {
 			return uuid;
 		}
 		try {
-			IProjectArea area = ProcessAreaUtil.getProjectAreaFormUUID(uuid,
-					teamRepository, monitor);
+			IProjectArea area = ProcessAreaUtil.getProjectAreaFormUUID(uuid, teamRepository, monitor);
 			return area;
 		} catch (Exception e) {
 		}
 		try {
-			ITeamArea area = ProcessAreaUtil.getTeamAreaFormUUID(uuid,
-					teamRepository, monitor);
+			ITeamArea area = ProcessAreaUtil.getTeamAreaFormUUID(uuid, teamRepository, monitor);
 			return area.getName();
 		} catch (Exception e) {
 		}
 		IAccessGroup[] groups;
 		try {
-			groups = auditableCommon.getAccessGroups(null, Integer.MAX_VALUE,
-					monitor);
+			groups = auditableCommon.getAccessGroups(null, Integer.MAX_VALUE, monitor);
 			for (IAccessGroup group : groups) {
 				if (group.getContextId().equals(uuid)) {
 					return group;
@@ -52,9 +48,8 @@ public class AccessContextUtil {
 		return null;
 	}
 
-													public static UUID getAccessContextFromFQN(String value,
-			ITeamRepository teamRepository, IAuditableCommon auditableCommon,
-			IProcessClientService processClient, IProgressMonitor monitor)
+	public static UUID getAccessContextFromFQN(String value, ITeamRepository teamRepository,
+			IAuditableCommon auditableCommon, IProcessClientService processClient, IProgressMonitor monitor)
 			throws TeamRepositoryException {
 		if (null == value) {
 			return null;
@@ -63,8 +58,7 @@ public class AccessContextUtil {
 			return IContext.PUBLIC;
 		}
 		try {
-			IProcessArea processArea = ProcessAreaUtil.findProcessAreaByFQN(
-					value, processClient, monitor);
+			IProcessArea processArea = ProcessAreaUtil.findProcessAreaByFQN(value, processClient, monitor);
 			if (processArea != null) {
 				return processArea.getContextId();
 			}
@@ -72,8 +66,7 @@ public class AccessContextUtil {
 		}
 		IAccessGroup[] groups;
 		try {
-			groups = auditableCommon.getAccessGroups(null, Integer.MAX_VALUE,
-					monitor);
+			groups = auditableCommon.getAccessGroups(null, Integer.MAX_VALUE, monitor);
 			for (IAccessGroup group : groups) {
 				if (group.getName().equals(value)) {
 					return group.getContextId();

@@ -16,44 +16,52 @@ import com.ibm.team.repository.client.login.UsernameAndPasswordLoginInfo;
 import com.ibm.team.repository.common.TeamRepositoryException;
 
 public class RepositoryUtil {
-	
+
 	private final static Logger log = Logger.getLogger(OperarWorkitem.class);
-	
+
 	private String hostname;
 	private String username;
 	private String password;
 	private ITeamRepository teamrepo;
 	private String message = "";
-	
+
 	public RepositoryUtil(Auditoria audit) {
 		this.hostname = audit.getRepository();
 		this.username = audit.getUsername();
 		this.password = audit.getPassword();
 		this.message = "[" + audit.getIdTransaccion() + "] - ";
 	}
+
 	public String getHostname() {
 		return hostname;
 	}
+
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public ITeamRepository getTeamrepo() {
 		return teamrepo;
 	}
+
 	public void login() throws TeamRepositoryException, SocketTimeoutException {
-		if(!TeamPlatform.isStarted()) {
+		if (!TeamPlatform.isStarted()) {
 			TeamPlatform.startup();
 		}
 		teamrepo = TeamPlatform.getTeamRepositoryService().getTeamRepository(this.getHostname());
@@ -63,14 +71,16 @@ public class RepositoryUtil {
 		teamrepo.login(progressMonitor, true);
 		log.info(message + "Conexion exitosa.");
 	}
+
 	public void logout() {
-		if(TeamPlatform.isStarted()) {
+		if (TeamPlatform.isStarted()) {
 			TeamPlatform.shutdown();
 		}
 		log.info(message + "Desconectando . . .");
 		teamrepo.logout();
 		log.info(message + "Desconexion exitosa.");
 	}
+
 	public static ILoginHandler2 getLoginHandler(final String user, final String password) {
 		return new ILoginHandler2() {
 			public ILoginInfo2 challenge(ITeamRepository repo) {

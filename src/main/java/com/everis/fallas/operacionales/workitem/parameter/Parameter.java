@@ -9,8 +9,8 @@ public class Parameter {
 	private boolean isCommand = false;
 	private boolean isConsumed = false;
 
-																		private Parameter(String name, String value, boolean required,
-			boolean isSwitch, boolean isCommand, String example) {
+	private Parameter(String name, String value, boolean required, boolean isSwitch, boolean isCommand,
+			String example) {
 		super();
 		this.fName = name;
 		this.fExample = (null == example) ? "" : "=" + example;
@@ -20,7 +20,7 @@ public class Parameter {
 		this.fValue = value;
 	}
 
-											private Parameter(String name, String value) {
+	private Parameter(String name, String value) {
 		super();
 		this.fName = name;
 		this.fExample = null;
@@ -30,58 +30,57 @@ public class Parameter {
 		this.fValue = value;
 	}
 
-						public String getName() {
+	public String getName() {
 		return fName;
 	}
 
-						public String getExample() {
+	public String getExample() {
 		return fExample;
 	}
 
-						public String getValue() {
+	public String getValue() {
 		return fValue;
 	}
 
-						public void setValue(String value) {
+	public void setValue(String value) {
 		fValue = value;
 	}
 
-						public boolean isRequired() {
+	public boolean isRequired() {
 		return fRequired;
 	}
 
-						public boolean isSwitch() {
+	public boolean isSwitch() {
 		return isSwitch;
 	}
 
-						public boolean isCommand() {
+	public boolean isCommand() {
 		return isCommand;
 	}
 
-						public boolean isConsumed() {
+	public boolean isConsumed() {
 		return isConsumed;
 	}
 
-				public void setConsumed() {
+	public void setConsumed() {
 		isConsumed = true;
 	}
 
-										public static Parameter createRequiredParameter(String name, String example) {
+	public static Parameter createRequiredParameter(String name, String example) {
 		return new Parameter(name, null, true, false, false, example);
 	}
 
-										public static Parameter createParameterValue(String name, String value) {
-		Parameter parameter = new Parameter(name, value, false, false, false,
-				null);
+	public static Parameter createParameterValue(String name, String value) {
+		Parameter parameter = new Parameter(name, value, false, false, false, null);
 		parameter.setValue(value);
 		return parameter;
 	}
 
-								public static Parameter createCommand(String name) {
+	public static Parameter createCommand(String name) {
 		return new Parameter(name, null, true, false, true, null);
 	}
 
-								public static Parameter createSwitch(String name, String value) {
+	public static Parameter createSwitch(String name, String value) {
 		return new Parameter(name, value, false, true, false, null);
 	}
 

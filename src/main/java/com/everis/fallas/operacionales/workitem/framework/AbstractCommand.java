@@ -12,59 +12,57 @@ public abstract class AbstractCommand implements IWorkItemCommand {
 	private IProgressMonitor monitor = null;
 	private OperationResult result = new OperationResult();
 
-							protected void addOperationResult(OperationResult operationResult) {
+	protected void addOperationResult(OperationResult operationResult) {
 		this.result.addOperationResult(operationResult);
 	}
 
-						public void appendResultString(String value) {
+	public void appendResultString(String value) {
 		this.result.appendResultString(value);
 	}
 
-				public void setSuccess() {
+	public void setSuccess() {
 		this.result.setSuccess();
 	}
 
-				public void setFailed() {
+	public void setFailed() {
 		this.result.setFailed();
 	}
 
-						public OperationResult getResult() {
+	public OperationResult getResult() {
 		return this.result;
 	}
 
-				protected AbstractCommand(ParameterManager parametermanager) {
+	protected AbstractCommand(ParameterManager parametermanager) {
 		this.params = parametermanager;
 		initialize();
 	}
 
-				protected IProgressMonitor getMonitor() {
+	protected IProgressMonitor getMonitor() {
 		return monitor;
 	}
 
-				protected ParameterManager getParameterManager() {
+	protected ParameterManager getParameterManager() {
 		return params;
 	}
 
-						public void setParameterManager(ParameterManager params) {
+	public void setParameterManager(ParameterManager params) {
 		this.params = params;
 	}
 
-										public void initialize() {
+	public void initialize() {
 		setRequiredParameters();
 	}
 
-					public abstract void setRequiredParameters();
+	public abstract void setRequiredParameters();
 
-									@Override
-	public OperationResult execute(IProgressMonitor monitor)
-			throws TeamRepositoryException {
+	@Override
+	public OperationResult execute(IProgressMonitor monitor) throws TeamRepositoryException {
 		return process();
 	}
 
-								@Override
+	@Override
 	public String helpUsage() {
-		return getParameterManager().helpUsageRequiredParameters() + " "
-				+ helpSpecificUsage();
+		return getParameterManager().helpUsageRequiredParameters() + " " + helpSpecificUsage();
 	}
 
 	public abstract String helpSpecificUsage();
@@ -74,6 +72,6 @@ public abstract class AbstractCommand implements IWorkItemCommand {
 		getParameterManager().validateRequiredParameters();
 	}
 
-							public abstract OperationResult process() throws TeamRepositoryException;
+	public abstract OperationResult process() throws TeamRepositoryException;
 
 }
