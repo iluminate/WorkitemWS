@@ -9,7 +9,7 @@
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.jersey.config.property.packages</param-name>
-			<param-value>com.everis.fallas.operacionales.workitem</param-value>
+			<param-value>com.everis.fallas.operacionales.workitem.service</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>

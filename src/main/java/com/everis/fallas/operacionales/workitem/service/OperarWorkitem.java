@@ -97,18 +97,39 @@ public class OperarWorkitem {
 				response.setMensajeError("No se encontro el tipo de work item: " + workitem.getType());
 				return false;
 			}
-
-			List<Parametro> param = agregarRelaciones(workitem.getParametro(), wcode);
-			WorkItemInitialization operation = new WorkItemInitialization(param, message);
-			IWorkItemHandle handle = operation.run(workItemType, null);
-			IWorkItem workItem = auditableClient.resolveAuditable(handle, IWorkItem.FULL_PROFILE, null);
-			wcode.add(workItem.getId());
-			log.info(message + "Elemento de trabajo creado correctamente: " + workItem.getId() + " ("
-					+ workItem.getHTMLSummary().getPlainText().toString() + ").");
-			listaWorkitem.add(workItem.getId() + "|" + workItem.getHTMLSummary().getPlainText().toString());
+			String summarywi = obtenerSummary(workitem.getParametro());
+			int idwi = obtenerIdPerSummary(summarywi);
+			if (idwi > 0) {
+				wcode.add(idwi);
+				log.info(message + "Elemento de trabajo creado correctamente: " + idwi + " ("
+						+ summarywi + ").");
+				listaWorkitem.add(idwi + "|" + summarywi);
+			} else {	
+				List<Parametro> param = agregarRelaciones(workitem.getParametro(), wcode);
+				WorkItemInitialization operation = new WorkItemInitialization(param, message);
+				IWorkItemHandle handle = operation.run(workItemType, null);
+				IWorkItem workItem = auditableClient.resolveAuditable(handle, IWorkItem.FULL_PROFILE, null);
+				wcode.add(workItem.getId());
+				log.info(message + "Elemento de trabajo creado correctamente: " + workItem.getId() + " ("
+						+ workItem.getHTMLSummary().getPlainText().toString() + ").");
+				listaWorkitem.add(workItem.getId() + "|" + workItem.getHTMLSummary().getPlainText().toString());
+			}
 		}
 		response.setListaWorkitem(listaWorkitem);
 		return true;
+	}
+
+	private int obtenerIdPerSummary(String summarywi) {
+		return 0;
+	}
+
+	private String obtenerSummary(List<Parametro> parametro) {
+		for (Parametro parametro2 : parametro) {
+			if (parametro2.getName().equals("summary")) {
+				return parametro2.getValue();
+			}
+		}
+		return null;
 	}
 
 	private List<Parametro> agregarRelaciones(List<Parametro> parametro, List<Integer> wcode) {
