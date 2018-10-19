@@ -38,6 +38,8 @@ import com.ibm.team.workitem.common.model.IWorkItemType;
 public class OperarWorkitem {
 
 	Response response = new Response();
+	List<String> listaWorkitem = new ArrayList<String>();
+	
 	private final static Logger log = Logger.getLogger(OperarWorkitem.class);
 	private String message = "";
 
@@ -68,6 +70,7 @@ public class OperarWorkitem {
 			response.setMensajeError(e.getMessage());
 		} finally {
 			conexion.logout();
+			response.setListaWorkitem(listaWorkitem);
 			log.info(message + response.getMensajeError());
 		}
 		return response;
@@ -89,7 +92,7 @@ public class OperarWorkitem {
 
 		List<Integer> wcode = new ArrayList<Integer>();
 
-		List<String> listaWorkitem = new ArrayList<String>();
+		
 		for (Workitem workitem : request.getWorkitem()) {
 			IWorkItemType workItemType = workItemClient.findWorkItemType(projectArea, workitem.getType(), null);
 			if (workItemType == null) {
@@ -115,7 +118,6 @@ public class OperarWorkitem {
 				listaWorkitem.add(workItem.getId() + "|" + workItem.getHTMLSummary().getPlainText().toString());
 			}
 		}
-		response.setListaWorkitem(listaWorkitem);
 		return true;
 	}
 
